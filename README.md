@@ -1,7 +1,7 @@
 # 口袋自然 Pocket Nature · v1.0
 
 山水有清音 —— 给去不了远方的人，一段随身的自然声音疗愈。
-A pocket-sized nature sound practice for commutes, lunch breaks and sleepless nights.
+A pocket-sized nature sound practice for commutes, lunch breaks，sleepless nights and every daily scenarios.
 
 ## 运行 / Run
 直接用浏览器打开 `index.html`（`img/` 文件夹需与它放在一起）。所有声音由 Web Audio 实时合成，无需联网下载音频。
