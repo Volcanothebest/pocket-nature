@@ -19,7 +19,7 @@ Open `index.html` in any modern browser. Keep `img/` next to it.
 - `CHANGELOG.md`：版本记录
 
 ## 图片与授权 / Image credits
-晨光森林、雨林池塘、山涧溪流、珊瑚浅海、林间篝火、雪中松林、星空草原由豆包 AI 生成，保留原 AI 标识，界面另有“背景图片由 AI 生成”说明。黄昏海滩由作者提供，来源待确认。
+晨光森林、雨林池塘、山涧溪流、珊瑚浅海、林间篝火、雪中松林、星空草原由豆包 AI 生成，保留原 AI 标识，界面另有“背景图片由 AI 生成”说明。黄昏海滩来源：https://unsplash.com/@alethiabaguilar
 
 ## 免责声明 / Disclaimer
 口袋自然是一种放松练习，不能代替心理咨询或医疗。中国大陆全国统一心理援助热线：12356。
