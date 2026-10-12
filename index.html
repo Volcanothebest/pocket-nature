@@ -1,0 +1,1284 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="口袋自然 Pocket Nature：给去不了远方的人，一段随身的自然声音疗愈。">
+<meta name="theme-color" content="#121A1C">
+<title>口袋自然</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@300;500;700&family=Source+Serif+4:ital,wght@0,300;0,400;1,400&display=swap">
+<style>
+/* Layout: one screen, one window. A real landscape photo (or the painted fallback) fills the view; a round frosted "lens" at the centre is the only big object — tap it to begin. Scenes sit in a thin glass strip below; everything else lives in a side drawer. Four type sizes: s 13 / m 15 / l 20 / xl display. */
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+:root{
+  --ink:#FFF7EC; --ink-2:rgba(255,247,236,.78); --ink-3:rgba(255,247,236,.56);
+  --glass:rgba(255,248,238,.10); --glass-2:rgba(255,248,238,.18); --line:rgba(255,248,238,.26);
+  --sheet:rgba(24,29,26,.72); --amber:#F2B47A; --amber-ink:#2A1C10; --night:#121A1C;
+  --fs-s:13px; --fs-m:15px; --fs-l:20px; --fs-xl:clamp(30px,5vw,40px);
+  --f-serif:"Noto Serif SC","Source Serif 4","Songti SC",serif;
+  --f-sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --f-latin:"Source Serif 4",Georgia,serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+html,body{height:100%}
+html{background:var(--night)}
+body{margin:0;background:var(--night);color:var(--ink);font-family:var(--f-sans);font-size:var(--fs-m);line-height:1.7;text-shadow:0 1px 14px rgba(0,0,0,.25);overflow:hidden}
+h1,h2,h3{font-family:var(--f-serif);font-weight:500;margin:0;line-height:1.4;text-wrap:balance}
+p,li,summary,.small,.q-main,.q-sub,.q-cite,.lens-top,.hint,.msg,.care,.guide,label,.validate{text-wrap:pretty}
+.lens-sub,.hint,.endcard .msg,.daily .q-main,.daily .q-sub,.daily .q-cite,.wx-now b{text-wrap:balance}
+h2{font-size:var(--fs-l);letter-spacing:.06em}
+h3{font-size:var(--fs-m)}
+p{margin:0}
+.bg{position:fixed;inset:-4%;background:center/cover no-repeat;opacity:0;transition:opacity 1.6s ease;z-index:0;animation:drift 48s ease-in-out infinite alternate}
+.bg.on{opacity:1}
+.scrim{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(120% 90% at 50% 45%,rgba(10,14,12,0) 40%,rgba(10,14,12,.38)),linear-gradient(rgba(10,14,12,.32),rgba(10,14,12,.04) 26%,rgba(10,14,12,.04) 56%,rgba(10,14,12,.52))}
+.bg::after{content:"";position:absolute;inset:0;background:rgba(242,180,122,.06);mix-blend-mode:soft-light}
+.credit{position:fixed;right:20px;top:calc(68px + env(safe-area-inset-top,0px));text-align:right;padding:2px 10px;border-radius:999px;background:rgba(18,24,21,.32);z-index:4;font-size:var(--fs-s);color:var(--ink-2);pointer-events:none}
+@keyframes drift{from{transform:scale(1)}to{transform:scale(1.07) translate(-1%,-.5%)}}
+#field{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:1}
+#touch{position:fixed;inset:0;z-index:2;cursor:crosshair;touch-action:none;outline:none}
+button{font:inherit;font-size:var(--fs-m);color:var(--ink);background:var(--glass);border:1px solid var(--line);border-radius:999px;padding:7px 16px;min-height:40px;cursor:pointer;transition:background .3s,border-color .3s,transform .2s;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+button:hover{background:var(--glass-2)}
+button:active{transform:scale(.97)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+button[aria-pressed="true"]{background:rgba(242,180,122,.9);color:var(--amber-ink);border-color:rgba(255,222,184,.9);text-shadow:none}
+.primary{background:rgba(242,180,122,.92);color:var(--amber-ink);border-color:rgba(255,222,184,.9);font-weight:500;text-shadow:none}
+.primary:hover{background:var(--amber)}
+.link{background:none;border:none;padding:4px 0;min-height:auto;color:var(--ink-2);text-decoration:underline;text-underline-offset:4px;-webkit-backdrop-filter:none;backdrop-filter:none}
+.small{font-size:var(--fs-s);color:var(--ink-2)}
+.glass{background:var(--glass);border:1px solid var(--line);-webkit-backdrop-filter:blur(22px) saturate(1.15);backdrop-filter:blur(22px) saturate(1.15);box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 18px 50px rgba(0,0,0,.16)}
+
+/* ---- the one screen ---- */
+.ui{position:fixed;inset:0;z-index:3;display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top,0px)) 20px calc(18px + env(safe-area-inset-bottom,0px));pointer-events:none}
+@media (min-width:720px){.ui{padding-inline:40px}}
+.ui > *{pointer-events:auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;min-width:0}
+.brand b{font-family:var(--f-serif);font-weight:500;letter-spacing:.24em}
+.brand span{font-size:var(--fs-s);color:var(--ink-2)}
+@media (max-width:520px){.brand span{display:none}}
+@media (min-width:720px){.credit{right:40px}}
+.tools{display:flex;gap:8px;align-items:center}
+.lang{display:inline-flex;border-radius:999px;padding:3px}
+.lang button{border:none;min-height:32px;padding:2px 12px;font-size:var(--fs-s);background:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+.lang button[aria-pressed="true"]{background:rgba(255,248,238,.9)}
+.icon-btn{width:40px;height:40px;padding:0;display:grid;place-items:center}
+.checkin{align-self:center;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:center;border-radius:20px;padding:8px 14px;margin-top:14px;font-size:var(--fs-s)}
+.checkin .chips button{min-height:32px;padding:2px 12px;font-size:var(--fs-s)}
+.middle{flex:1;display:grid;place-items:center;position:relative;pointer-events:none;min-height:0}
+.hint{position:absolute;left:0;right:0;top:6%;text-align:center;font-family:var(--f-serif);font-weight:300;font-size:var(--fs-l);transition:opacity .8s;padding-inline:12px}
+.lens{pointer-events:auto;width:min(68vw,320px);aspect-ratio:1;max-width:100%;border-radius:50%;padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;
+  background:radial-gradient(circle at 50% 30%,rgba(255,250,242,.16),rgba(18,24,21,.2) 60%,rgba(18,24,21,.32));border:1px solid rgba(255,248,238,.42);
+  -webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);box-shadow:inset 0 1px 1px rgba(255,255,255,.35),inset 0 -20px 40px rgba(0,0,0,.08),0 30px 80px rgba(0,0,0,.2);transition:transform 1.2s ease,box-shadow .6s}
+.lens:hover{background:radial-gradient(circle at 50% 35%,rgba(255,250,242,.26),rgba(255,248,238,.08) 62%,rgba(255,248,238,.14))}
+.lens.breathing{box-shadow:inset 0 1px 1px rgba(255,255,255,.35),0 0 90px rgba(255,190,130,.35)}
+.lens-top{font-size:var(--fs-s);letter-spacing:.22em;color:var(--ink-2)}
+.lens-main{font-family:var(--f-serif);font-weight:700;font-size:var(--fs-xl);letter-spacing:.14em;line-height:1.25}
+html[lang="en"] .lens-main{font-family:var(--f-latin);font-weight:600;letter-spacing:.02em}
+.lens-main.time{font-family:var(--f-mono);font-weight:400;letter-spacing:.04em;font-variant-numeric:tabular-nums}
+.lens-sub{font-size:var(--fs-s);color:var(--ink-2);max-width:17em;text-wrap:balance}
+.lens-cta{margin-top:8px;font-size:var(--fs-s);letter-spacing:.14em;padding:4px 16px;border-radius:999px;background:rgba(242,180,122,.92);color:var(--amber-ink);text-shadow:none;animation:pulse 10s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.78}40%{opacity:1}}
+.playbar{align-self:center;display:flex;gap:8px;border-radius:999px;padding:5px;margin-top:6px}
+.playbar button{min-height:36px}
+.scenes{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px;margin-top:10px;scrollbar-width:none;justify-content:safe center}
+.scenes::-webkit-scrollbar{display:none}
+.tile{flex:0 0 auto;scroll-snap-align:center;display:flex;align-items:center;gap:10px;padding:5px 14px 5px 5px;border-radius:999px;font-size:var(--fs-s);font-weight:700;white-space:nowrap}
+.tile .th{width:30px;height:30px;border-radius:50%;background:center/cover no-repeat;position:relative;flex:none;border:1px solid var(--line)}
+.tile .rec{position:absolute;right:-2px;top:-2px;width:9px;height:9px;border-radius:50%;background:var(--amber);border:1.5px solid var(--night)}
+.daily{align-self:center;text-align:center;max-width:560px;margin-top:12px;display:flex;flex-direction:column;gap:2px}
+.daily .q-sub{display:none}
+@media (min-height:760px){.daily .q-sub{display:block}}
+body.playing .scenes,body.playing .daily,body.playing .checkin{opacity:0;pointer-events:none;transition:opacity .8s}
+.q-main{font-family:var(--f-serif);font-size:var(--fs-m);line-height:1.7}
+.q-sub{font-family:var(--f-latin);font-size:var(--fs-s);color:var(--ink-2);font-style:italic}
+.q-cite{font-size:var(--fs-s);color:var(--ink-3)}
+.endcard{position:fixed;inset:0;z-index:15;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(10,14,12,.2)}
+.endcard .card{border-radius:30px;padding:30px;max-width:500px;width:100%;max-height:100%;overflow:auto;display:flex;flex-direction:column;gap:16px;text-align:center;align-items:center;background:var(--sheet);border:1px solid var(--line);-webkit-backdrop-filter:blur(28px);backdrop-filter:blur(28px)}
+.endcard .msg{font-family:var(--f-serif);font-size:var(--fs-l);line-height:1.7}
+.endcard .q-main{font-size:var(--fs-m)}
+.eyebrow{font-size:var(--fs-s);letter-spacing:.24em;color:var(--ink-2)}
+.wxrow{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap}
+.wxrow span{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--glass-2);border:1px solid var(--line)}
+.care{background:rgba(242,180,122,.14);border:1px solid rgba(242,180,122,.5);border-radius:16px;padding:10px 14px;font-size:var(--fs-s);text-align:left}
+.row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+
+/* ---- drawer ---- */
+.drawer{position:fixed;inset:0;z-index:18;display:flex;justify-content:flex-end;background:rgba(10,14,12,.25)}
+.drawer-in{width:min(560px,100%);height:100%;background:var(--sheet);border-left:1px solid var(--line);-webkit-backdrop-filter:blur(30px) saturate(1.2);backdrop-filter:blur(30px) saturate(1.2);display:flex;flex-direction:column}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:calc(16px + env(safe-area-inset-top,0px)) 22px 12px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;padding:0 22px 14px;border-bottom:1px solid var(--line)}
+.tabs button{min-height:34px;padding:2px 14px;font-size:var(--fs-s)}
+.panes{flex:1;overflow:auto;padding:22px 22px calc(28px + env(safe-area-inset-bottom,0px))}
+.pane{display:flex;flex-direction:column;gap:22px}
+.group{display:flex;flex-direction:column;gap:10px}
+.label{font-size:var(--fs-s);color:var(--ink-2);letter-spacing:.14em}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.mixer{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.snd{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.snd.on{background:rgba(242,180,122,.13);border-color:rgba(242,180,122,.55)}
+.snd header{display:flex;align-items:center;gap:12px}
+.glyph{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-serif);background:var(--glass-2);border:1px solid var(--line);flex:none}
+.snd.on .glyph{background:var(--amber);color:var(--amber-ink);border-color:transparent;text-shadow:none}
+.snd-t{min-width:0}
+.land{font-size:var(--fs-s);color:var(--ink-2)}
+.sw{margin-left:auto;min-width:54px;min-height:32px;padding:2px 12px;font-size:var(--fs-s)}
+input[type=range]{width:100%;accent-color:var(--amber);margin:0}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:32px 1fr;gap:2px 10px}
+.steps li::before{content:"0" counter(s);font-family:var(--f-mono);font-size:var(--fs-s);color:var(--amber);grid-row:span 2;padding-top:2px}
+.steps p{font-size:var(--fs-s);color:var(--ink-2)}
+.guide{border-left:2px solid var(--amber);padding-left:14px;font-size:var(--fs-s);color:var(--ink-2)}
+.evs{display:flex;flex-direction:column;gap:10px}
+.ev{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:4px}
+.ev-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.grade{font-family:var(--f-mono);font-size:var(--fs-s);border-radius:6px;padding:0 7px;border:1px solid var(--line);color:var(--ink-2);text-shadow:none}
+.grade.A{background:var(--amber);color:var(--amber-ink);border-color:var(--amber)}
+.grade.B{background:rgba(242,180,122,.28);color:var(--ink)}
+.ev-use{font-size:var(--fs-s);color:var(--amber)}
+.ev p{font-size:var(--fs-s)}
+.ev .cite{font-family:var(--f-mono);color:var(--ink-3);overflow-wrap:anywhere}
+.photos{display:flex;flex-direction:column;gap:8px}
+.ph{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:16px;padding:8px 12px}
+.ph .th{width:44px;height:44px;border-radius:12px;background:center/cover no-repeat;flex:none}
+.ph .nm{flex:1;min-width:0}
+.ph label{font-size:var(--fs-s);border:1px solid var(--line);border-radius:999px;padding:4px 12px;cursor:pointer;background:var(--glass)}
+.ph input{position:absolute;width:1px;height:1px;opacity:0}
+.switch{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:18px;padding:14px 16px}
+details summary{cursor:pointer;color:var(--ink-2);font-size:var(--fs-s)}
+pre.json{font-family:var(--f-mono);font-size:var(--fs-s);background:rgba(0,0,0,.25);border-radius:12px;padding:10px;overflow:auto;max-height:200px;margin:8px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;text-shadow:none}
+
+/* ---- check-in sheets ---- */
+.modal{position:fixed;inset:0;background:rgba(10,14,12,.3);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20}
+.sheet{background:var(--sheet);border:1px solid var(--line);-webkit-backdrop-filter:blur(30px) saturate(1.2);backdrop-filter:blur(30px) saturate(1.2);border-radius:30px;width:100%;max-width:520px;max-height:min(88vh,760px);display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.sheet-body{padding:28px 26px 10px;overflow:auto;display:flex;flex-direction:column;gap:16px}
+.sheet-foot{padding:14px 26px 22px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.sheet h2{font-size:var(--fs-l)}
+.sheet h3{margin-top:6px}
+.dots{display:flex;gap:6px}
+.dots i{width:22px;height:3px;border-radius:2px;background:var(--line)}
+.dots i.on{background:var(--amber)}
+.bubbles{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding-block:4px}
+.bubble{min-height:46px;padding:8px 20px}
+.validate{background:rgba(242,180,122,.11);border:1px solid rgba(242,180,122,.32);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.wx{display:flex;flex-direction:column;gap:10px;padding-block:4px}
+.wx-now{display:flex;align-items:center;gap:10px;justify-content:center;color:var(--amber);min-height:40px}
+.wx-now b{font-family:var(--f-serif);font-weight:500;font-size:var(--fs-l);color:var(--ink)}
+.wx-track{position:relative;padding-block:16px 6px}
+.ghost{position:absolute;top:-8px;transform:translateX(-50%);color:var(--ink-2);opacity:.75;pointer-events:none}
+.wx-ends{display:flex;justify-content:space-between;font-size:var(--fs-s);color:var(--ink-2)}
+.body-part{display:flex;flex-direction:column;gap:6px}
+.body-part b{font-size:var(--fs-s);color:var(--ink-2);font-weight:400}
+.warn{color:var(--amber);font-size:var(--fs-s);min-height:1.4em}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="bg" id="bgA"></div><div class="bg" id="bgB"></div>
+<div class="scrim" aria-hidden="true"></div>
+<canvas id="field" aria-hidden="true"></canvas>
+<div id="touch" tabindex="0" aria-label="Nature canvas — tap to make sound, drag to rustle"></div>
+
+<div class="ui">
+  <header class="top">
+    <div class="brand"><b data-i="brand"></b><span data-i="tagline"></span></div>
+    <div class="tools">
+      <div class="lang glass" role="group" aria-label="Language">
+        <button type="button" id="langZh" aria-pressed="true">中</button>
+        <button type="button" id="langEn" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" class="icon-btn glass" id="openDrawer" aria-label="Sounds, practice, evidence, privacy"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h10M4 17h13"/></svg></button>
+    </div>
+  </header>
+
+  <div class="checkin glass" id="checkin" hidden>
+    <span data-i="checkQ"></span>
+    <span class="chips" id="checkOpts">
+      <button type="button" data-v="kept" data-i="checkKept"></button>
+      <button type="button" data-v="half" data-i="checkHalf"></button>
+      <button type="button" data-v="no" data-i="checkNo"></button>
+    </span>
+  </div>
+
+  <div class="middle">
+    <p class="hint" id="hint" hidden></p>
+    <button type="button" class="lens" id="lens">
+      <span class="lens-top" id="lensTop"></span>
+      <span class="lens-main" id="lensMain"></span>
+      <span class="lens-sub" id="lensSub"></span>
+      <span class="lens-cta" id="lensCta"></span>
+    </button>
+  </div>
+
+  <div class="playbar glass" id="playbar" hidden>
+    <button type="button" id="breathTgl" aria-pressed="false" data-i="orbBreath"></button>
+    <button type="button" id="finishBtn" data-i="finish"></button>
+    <span id="nowPlaying" hidden></span>
+  </div>
+
+  <div class="scenes" id="scenes" role="group" aria-label="Scenes"></div>
+  <div class="daily" id="daily"></div>
+</div>
+
+<div class="endcard" id="endcard" hidden></div>
+<p class="credit" id="credit" data-i="aiCredit" hidden></p>
+
+<div class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-label="Settings">
+  <div class="drawer-in">
+    <div class="drawer-head"><h2 data-i="brand"></h2><button type="button" class="icon-btn" id="closeDrawer" aria-label="Close"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="tabs" id="tabs">
+      <button type="button" data-tab="sound" aria-pressed="true" data-i="tabSound"></button>
+      <button type="button" data-tab="practice" aria-pressed="false" data-i="tabPractice"></button>
+      <button type="button" data-tab="ev" aria-pressed="false" data-i="tabEv"></button>
+      <button type="button" data-tab="privacy" aria-pressed="false" data-i="tabPrivacy"></button>
+    </div>
+    <div class="panes">
+      <div class="pane" data-pane="sound">
+        <div class="group"><span class="label" data-i="lenLabel"></span><div class="chips" id="durChips"></div></div>
+        <div class="group"><span class="label" data-i="voiceLabel"></span><div class="chips" id="voiceChips"></div></div>
+        <div class="group"><span class="label" data-i="mixerH"></span><div class="mixer" id="mixer"></div></div>
+      </div>
+      <div class="pane" data-pane="practice" hidden>
+        <h2 data-i="practiceH"></h2>
+        <ol class="steps">
+          <li><h3 data-i="ps1t"></h3><p data-i="ps1d"></p></li>
+          <li><h3 data-i="ps2t"></h3><p data-i="ps2d"></p></li>
+          <li><h3 data-i="ps3t"></h3><p data-i="ps3d"></p></li>
+          <li><h3 data-i="ps4t"></h3><p data-i="ps4d"></p></li>
+          <li><h3 data-i="ps5t"></h3><p data-i="ps5d"></p></li>
+        </ol>
+      </div>
+      <div class="pane" data-pane="ev" hidden>
+        <p class="guide" data-i="evGuide"></p>
+        <div class="chips" id="evTabs">
+          <button type="button" data-f="all" aria-pressed="true" data-i="evAll"></button>
+          <button type="button" data-f="res" aria-pressed="false" data-i="evRes"></button>
+          <button type="button" data-f="cls" aria-pressed="false" data-i="evCls"></button>
+        </div>
+        <div class="evs" id="evs"></div>
+        <p class="small" data-i="evLegend"></p>
+      </div>
+      <div class="pane" data-pane="privacy" hidden>
+        <div class="group"><h2 data-i="photoH"></h2><p class="small" data-i="photoP"></p><div class="photos" id="photos"></div></div>
+        <div id="setBody" class="group"></div>
+        <p class="small" data-i="disc1"></p>
+        <p class="small" data-i="disc2"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="mPre" hidden role="dialog" aria-modal="true" aria-labelledby="preTitle"><div class="sheet"><div class="sheet-body" id="preBody"></div><div class="sheet-foot" id="preFoot"></div></div></div>
+<div class="modal" id="mPost" hidden role="dialog" aria-modal="true" aria-labelledby="postTitle"><div class="sheet"><div class="sheet-body" id="postBody"></div><div class="sheet-foot" id="postFoot"></div></div></div>
+
+<script>
+
+
+
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const LS = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} },
+  del(k){ try { localStorage.removeItem(k); } catch(e){} }
+};
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let lang = LS.get('pn-lang', null) || (((navigator.language || 'zh') + '').toLowerCase().startsWith('zh') ? 'zh' : 'en');
+
+/* ---------- copy ---------- */
+const I = {
+zh: {
+  brand:'口袋自然', tagline:'山水有清音', settings:'数据与隐私', today:'今天已静听 <b>{n}</b> 分钟',
+  checkQ:'昨天练习后的轻松感，保持了吗？', checkKept:'保持了', checkHalf:'一半', checkNo:'没有', checkThanks:'谢谢你告诉我们。',
+  recEyebrow:'为你推荐', startCheck:'先说说此刻的感受', startDirect:'直接开始', headphones:'建议戴上耳机。声音由浏览器实时合成，不需要下载。',
+  lenLabel:'时长', minUnit:'分钟', open:'不限', voiceLabel:'点击画面时发出', breathBtn:'跟海浪呼吸 · 吸 4 呼 6',
+  begin:'开始', pause:'暂停', resume:'继续', finish:'结束练习', silence:'此刻静默',
+  inhale:'吸气', exhale:'呼气', breathSub:'吐故纳新',
+  scenesH:'此刻的你在……', scenesP:'8 个场景按一天中的时段和你所在的地方划分。打开时会按当前时间推荐一个。', suggested:'推荐',
+  mixerH:'九种地貌，自由调和', mixerP:'全部声音实时合成，信号差的地铁里也能听。', on:'开', off:'关',
+  practiceH:'三分钟练习', practiceP:'碎片时间也够用，照着做一遍。',
+  ps1t:'说出感受', ps1d:'选出此刻的情绪和身体感觉。给情绪命名，本身就能让它松一点。',
+  ps2t:'数一数声层', ps2d:'闭上眼，先听最远的声音，再听最近的。',
+  ps3t:'伸手触摸', ps3d:'在画面上点一下，落下一滴雨；慢慢拖动，像手掌抚过树叶。',
+  ps4t:'跟浪呼吸', ps4d:'浪来时吸气 4 秒，浪退时呼气 6 秒，大约每分钟 6 次。',
+  ps5t:'看见变化', ps5d:'结束时再看一眼心里的天气，带着这一点安静回到你的一天。',
+  evH:'这些设计从哪里来', evAll:'全部', evRes:'研究', evCls:'经典与理论', evUse:'用在：',
+  evLegend:'证据等级：A 系统综述或元分析 · B 随机对照试验 · C 小样本、单中心或回顾性研究 · D 理论、经典与文化传统',
+  disc1:'口袋自然是一种放松练习，不能代替心理咨询或医疗。如果长期感到焦虑、失眠或情绪低落，请联系专业人士。',
+  disc2:'在中国大陆，可以拨打全国统一心理援助热线 12356。',
+  close:'关闭', next:'下一步', back:'上一步', skip:'跳过，直接听', beginListen:'开始静听', seeResult:'看看这一次',
+  p1T:'此刻最想缓一缓的是？', p1S:'最多选两个。', p1Need:'先选一个最接近的感受。', p1Max:'先选最想缓解的两个。',
+  validate:'有这种感受，一定有它的理由。',
+  p2T:'你心里的天气是？', p2S:'拖动滑块，没有对错。', p2Need:'请先拖动一下滑块。',
+  p3T:'身体哪里有感觉？', p3S:'可以多选，也可以跳过。', nothing:'没有特别感觉',
+  p4T:'为你准备好了', p4Emo:'你说此刻有些{emo}。', p4Plan:'为你准备了：{plan}',
+  q1T:'现在，心里的天气是？', q1S:'淡色的云，是你来时的位置。', q2T:'身体现在有什么感觉？', q2S:'可以多选。',
+  q3T:'这次最有帮助的是？', q3S:'可以跳过。', helpSound:'声音', helpTouch:'触摸', helpBreath:'呼吸', helpWords:'短句',
+  endEyebrow:'这一段静听结束了', again:'再听一段', stay:'留在这里',
+  endBig:'来的时候有些{emo}，现在你说“{body}”。这一点点松动，很珍贵。', endBigNoBody:'来的时候有些{emo}，现在心里亮了一些。这一点点松动，很珍贵。',
+  endSmall:'今天又往前走了一小步。{bodyLine}', endSmallBody:'你说“{body}”。',
+  endHard:'有些日子就是更难一些，你今天还是来了。', endNone:'谢谢你给自己留了这几分钟。',
+  recent:'最近几次的心里天气', care:'这几次你都承受得不轻。如果这种感觉持续，和专业的人聊一聊会有帮助：全国统一心理援助热线 12356。',
+  w0:'风平浪静', w1:'微风', w2:'阴云', w3:'小雨', w4:'狂风暴雨',
+  hintStart:'先听最远的声音，再听最近的。', hintTouch:'落下一滴雨，看它慢慢荡开。', hintDrag:'慢慢拖动，像手掌抚过树叶。',
+  hintSit:'不用急着赶走心里的感受，让它和雨声一起待一会儿。', hintBreath:'浪来时吸气，浪退时呼气。',
+  setTitle:'数据与隐私', setShare:'参与匿名统计', setShareD:'只上传不含任何身份信息的汇总统计，例如感受变化的方向。身体感受、具体分数和练习明细只留在你的设备上。',
+  setView:'查看将会上传的内容', setNone:'暂时没有待上传的内容。', setProto:'这是原型，没有连接服务器，任何数据都不会离开你的设备。',
+  setClear:'清除本机全部数据', setClear2:'再点一次，确认清除', setCleared:'已清除本机数据。',
+  consentTxt:'想帮口袋自然变得更好吗？同意后，我们只上传不含任何身份信息的汇总统计，例如感受变化的方向。身体感受和具体分数只留在你的设备上，随时可以在“数据与隐私”里关闭。',
+  consentYes:'我已满 14 岁，同意参与', consentNo:'不参与'
+},
+en: {
+  brand:'Pocket Nature', tagline:'Hills and streams make their own music', settings:'Data & privacy', today:'<b>{n}</b> min of listening today',
+  checkQ:'Did yesterday’s calm stay with you?', checkKept:'It stayed', checkHalf:'Partly', checkNo:'Not really', checkThanks:'Thanks for letting us know.',
+  recEyebrow:'Suggested for you', startCheck:'Check in first', startDirect:'Just listen', headphones:'Headphones help. Every sound is made live in your browser — nothing to download.',
+  lenLabel:'Length', minUnit:'min', open:'Open', voiceLabel:'Tapping the canvas plays', breathBtn:'Breathe with the waves · 4 in, 6 out',
+  begin:'Begin', pause:'Pause', resume:'Resume', finish:'Finish', silence:'Quiet for now',
+  inhale:'In', exhale:'Out', breathSub:'Breathe out the old, breathe in the new',
+  scenesH:'Where are you right now?', scenesP:'Eight scenes, sorted by time of day and where you are. We suggest one based on the time when you arrive.', suggested:'Suggested',
+  mixerH:'Nine landscapes to blend', mixerP:'All sounds are synthesized live, so they work even on a patchy subway signal.', on:'On', off:'Off',
+  practiceH:'A three-minute practice', practiceP:'Enough for a short break. Follow it once through.',
+  ps1t:'Name it', ps1d:'Pick the feeling and where you notice it in your body. Naming a feeling already loosens it a little.',
+  ps2t:'Count the layers', ps2d:'Close your eyes. Listen to the farthest sound first, then the nearest.',
+  ps3t:'Reach out', ps3d:'Tap the canvas to drop a raindrop. Drag slowly, like a palm brushing leaves.',
+  ps4t:'Breathe with the waves', ps4d:'In for 4 seconds as the wave comes, out for 6 as it leaves — about six breaths a minute.',
+  ps5t:'Notice the change', ps5d:'At the end, check your inner weather again and carry the quiet back into your day.',
+  evH:'Where these ideas come from', evAll:'All', evRes:'Research', evCls:'Classics & theory', evUse:'Used in: ',
+  evLegend:'Evidence grades: A systematic review or meta-analysis · B randomized trial · C small, single-site or retrospective study · D theory, classics and cultural tradition',
+  disc1:'Pocket Nature is a relaxation practice, not a substitute for therapy or medical care. If anxiety, sleeplessness or low mood keep coming back, please reach out to a professional.',
+  disc2:'In mainland China, the national mental health hotline is 12356.',
+  close:'Close', next:'Next', back:'Back', skip:'Skip and just listen', beginListen:'Begin listening', seeResult:'See how it went',
+  p1T:'What would you like to ease right now?', p1S:'Choose up to two.', p1Need:'Choose the feeling that comes closest.', p1Max:'Pick the two you most want to ease.',
+  validate:'It makes sense that you feel this way.',
+  p2T:'What’s the weather inside you?', p2S:'Slide to match. There’s no wrong answer.', p2Need:'Move the slider first.',
+  p3T:'Where do you feel it in your body?', p3S:'Pick any, or skip.', nothing:'Nothing in particular',
+  p4T:'Ready for you', p4Emo:'You said you feel {emo}.', p4Plan:'We prepared: {plan}',
+  q1T:'And now, what’s the weather inside?', q1S:'The faint cloud marks where you started.', q2T:'How does your body feel now?', q2S:'Pick any.',
+  q3T:'What helped most?', q3S:'Optional.', helpSound:'Sound', helpTouch:'Touch', helpBreath:'Breath', helpWords:'Words',
+  endEyebrow:'This listening is complete', again:'Listen again', stay:'Stay here',
+  endBig:'You arrived feeling {emo}. Now you said, “{body}.” That small easing matters.', endBigNoBody:'You arrived feeling {emo}, and now it’s a little lighter. That small easing matters.',
+  endSmall:'Today you took one more small step. {bodyLine}', endSmallBody:'You said, “{body}.”',
+  endHard:'Some days are harder. You still showed up.', endNone:'Thank you for giving yourself these few minutes.',
+  recent:'Your recent inner weather', care:'The last few sessions have felt heavy. If this continues, talking with a professional can help. In mainland China, call 12356.',
+  w0:'Calm seas', w1:'A light breeze', w2:'Overcast', w3:'Drizzle', w4:'Storm',
+  hintStart:'Listen to the farthest sound first, then the nearest.', hintTouch:'Let one raindrop fall, and watch it spread.', hintDrag:'Drag slowly, like a palm brushing leaves.',
+  hintSit:'No need to rush your feelings away. Let them sit with the rain for a while.', hintBreath:'Breathe in as the wave arrives, out as it leaves.',
+  setTitle:'Data & privacy', setShare:'Share anonymous stats', setShareD:'Only summary stats with no identifying information are sent, such as which way your feelings moved. Body sensations, exact scores and session details stay on your device.',
+  setView:'See what would be sent', setNone:'Nothing waiting to be sent.', setProto:'This is a prototype with no server. No data leaves your device.',
+  setClear:'Clear all data on this device', setClear2:'Tap again to confirm', setCleared:'Data on this device has been cleared.',
+  consentTxt:'Want to help Pocket Nature get better? If you agree, we only send summary stats with no identifying information, such as which way your feelings moved. Body sensations and exact scores stay on your device. You can turn this off anytime in Data & privacy.',
+  consentYes:'I’m 14 or older — count me in', consentNo:'No thanks'
+}};
+const t = (k, v) => { let s = (I[lang][k] ?? I.zh[k] ?? k); if (v) for (const x in v) s = s.split('{' + x + '}').join(v[x]); return s; };
+const L = o => o == null ? '' : (typeof o === 'object' ? (o[lang] ?? o.zh) : o);
+
+
+Object.assign(I.zh, {gMorning:'早上好', gNoon:'中午好', gAfternoon:'下午好', gEvening:'晚上好', gNight:'夜深了', todayShort:'今',
+  weekdays:['日','一','二','三','四','五','六'], recPill:'为你推荐 · {name}', orbCheck:'说说感受', orbBreath:'呼吸', orbScenes:'场景', finish:'结束',
+  navHome:'首页', navScenes:'场景', navSounds:'声音', navEv:'依据'});
+Object.assign(I.en, {gMorning:'Good morning', gNoon:'Good midday', gAfternoon:'Good afternoon', gEvening:'Good evening', gNight:'Still awake?', todayShort:'Today',
+  weekdays:['S','M','T','W','T','F','S'], recPill:'For you · {name}', orbCheck:'Check in', orbBreath:'Breathe', orbScenes:'Scenes', finish:'Finish',
+  navHome:'Home', navScenes:'Scenes', navSounds:'Sounds', navEv:'Evidence'});
+
+Object.assign(I.zh, {suggestedFor:'为你推荐', currentScene:'当前场景', tapBegin:'轻触开始', tapPause:'轻触暂停', tapResume:'轻触继续', listening:'静听中', paused:'已暂停',
+  cancel:'取消', tabSound:'声音', tabPractice:'练习', tabEv:'依据', tabPrivacy:'隐私与照片', orbBreath:'跟浪呼吸', finish:'结束',
+  photoH:'背景照片', photoP:'为每个场景换上你喜欢的实景照片。照片只保存在这台设备上，不会上传。', photoPick:'选择照片', photoReset:'恢复默认'});
+Object.assign(I.en, {suggestedFor:'Suggested for you', currentScene:'Current scene', tapBegin:'Tap to begin', tapPause:'Tap to pause', tapResume:'Tap to resume', listening:'Listening', paused:'Paused',
+  cancel:'Cancel', tabSound:'Sound', tabPractice:'Practice', tabEv:'Evidence', tabPrivacy:'Privacy & photos', orbBreath:'Breathe with the waves', finish:'Finish',
+  photoH:'Background photos', photoP:'Give each scene a real landscape photo you love. Photos stay on this device and are never uploaded.', photoPick:'Choose photo', photoReset:'Reset'});
+Object.assign(I.zh, {aiCredit:'背景图片由 AI 生成', skip:'跳过测评，直接开始', evGuide:'想找某一项依据？先按“研究”或“经典与理论”筛选。卡片左上角是证据等级，A 最强，D 是理论与文化传统；右上角写着它用在哪个功能。'});
+Object.assign(I.en, {aiCredit:'Background image is AI-generated', skip:'Skip check-in and begin', evGuide:'Looking for something specific? Filter by Research or Classics & theory. The top-left badge is the evidence grade (A strongest, D theory and tradition); the top-right says which feature it supports.'});
+Object.assign(I.zh, {"v_anxious": "焦虑是心在替你操心未来，说明你在乎。", "p_anxious": "不必马上放下这份焦虑，先跟着海浪，把呼气放长一点。", "m_anxious": "浪退时呼气，让肩膀跟着一起落下。", "v_tense": "紧张是身体在为重要的事蓄力。", "p_tense": "把这份紧张交给雨声，先松开手心和下巴。", "m_tense": "慢慢拖动画面，让紧绷跟着指尖散开。", "v_sad": "伤心，说明有些东西对你很重要。", "p_sad": "伤心可以慢慢来，让鸟鸣和溪水陪你坐一会儿。", "m_sad": "轻轻点一下，落下一颗冰晶，听它慢慢消散。", "v_afraid": "害怕，是心在提醒你保护自己。", "p_afraid": "篝火在这儿，落雪很轻。害怕的时候，先感受双脚踩在地上。", "m_afraid": "数一数身边的三种声音，把注意力带回此刻。", "v_irritable": "烦躁，常常是事情累积太久的信号。", "p_irritable": "让烦躁变成动作：在画面上用力划几下，再慢慢停下来。", "m_irritable": "越拖越慢，听树叶从沙沙作响变得安静。", "v_tired": "累了，是身体在请你停一停。", "p_tired": "这几分钟什么都不用做，只听鸟鸣和溪水。", "m_tired": "想闭眼就闭上，声音会一直在。", "v_sleepless": "睡不着的夜晚很漫长，此刻也有很多人醒着。", "p_sleepless": "不用努力入睡，只需要听。画面已经为你调暗。", "m_sleepless": "每次呼气，让身体再往床里沉一点。", "v_relax": "能主动留一点时间给自己，很好。", "p_relax": "先听最远的声音，再听最近的。", "m_relax": "落下一滴雨，看它慢慢荡开。"});
+Object.assign(I.en, {"v_anxious": "Anxiety is your mind looking out for what’s ahead. It means you care.", "p_anxious": "No need to drop the worry right away. Follow the waves and let each breath out last a little longer.", "m_anxious": "Breathe out as the wave leaves, and let your shoulders drop with it.", "v_tense": "Tension is your body gathering strength for something that matters.", "p_tense": "Hand the tension to the rain. Start by unclenching your hands and jaw.", "m_tense": "Drag slowly across the canvas and let the tightness spread out from your fingertips.", "v_sad": "Sadness means something mattered to you.", "p_sad": "Sadness can take its time. Let the birds and the stream sit with you.", "m_sad": "Tap gently to drop an ice chime, and listen as it fades.", "v_afraid": "Fear is your mind trying to protect you.", "p_afraid": "The fire is here and the snow is soft. When fear comes, first feel your feet on the ground.", "m_afraid": "Count three sounds around you, and bring your attention back to now.", "v_irritable": "Irritation is often a sign that too much has piled up.", "p_irritable": "Turn the irritation into motion: sweep across the canvas a few times, then slowly come to rest.", "m_irritable": "Drag slower and slower, and hear the leaves go from rustling to still.", "v_tired": "Tiredness is your body asking you to pause.", "p_tired": "For these few minutes there’s nothing to do. Just listen to the birds and the stream.", "m_tired": "Close your eyes if you like. The sounds will stay.", "v_sleepless": "Sleepless nights feel long. Many others are awake right now too.", "p_sleepless": "No need to try to sleep. Just listen. The screen is dimmed for you.", "m_sleepless": "With each breath out, let your body sink a little deeper into the bed.", "v_relax": "Making time for yourself is a good thing.", "p_relax": "Listen to the farthest sound first, then the nearest.", "m_relax": "Let one raindrop fall, and watch it spread."});
+const SMALL = {zh:['今天又往前走了一小步。','一点点松动，也是真实的变化。','你给了自己一段好时光，身体记住了。'], en:['Today you took one more small step.','A little easing is still a real change.','You gave yourself some good time, and your body noticed.']};
+const HARD = {zh:['难一点也没关系，你今天还是来了。','感受变重，有时是因为终于停下来看见了它。','这种感觉不会一直停在这里，下次换一个场景试试。'], en:['It’s okay if today is harder. You still showed up.','Sometimes a feeling gets heavier because you finally stopped to notice it.','This feeling won’t stay forever. Next time, let’s try another scene.']};
+/* ---------- content data ---------- */
+const SOUNDS = [
+  {id:'rain',     zh:'雨', name:{zh:'林间细雨',en:'Forest Rain'},     land:{zh:'温带雨林 · 屋檐下',en:'Temperate forest · under the eaves'}, tag:'pink noise + droplet pulses'},
+  {id:'stream',   zh:'溪', name:{zh:'山涧溪流',en:'Mountain Stream'}, land:{zh:'山谷 · 卵石河床',en:'Valley · pebble bed'}, tag:'brown noise · bandpass 650 Hz'},
+  {id:'waves',    zh:'海', name:{zh:'潮汐海浪',en:'Tidal Waves'},     land:{zh:'海岸 · 细沙滩',en:'Coast · fine sand'}, tag:'~0.1 Hz swell · surf hiss'},
+  {id:'snow',     zh:'雪', name:{zh:'落雪',en:'Snowfall'},            land:{zh:'雪原 · 针叶林',en:'Snowfield · conifers'}, tag:'fresh snow absorbs sound · <300 Hz'},
+  {id:'leaves',   zh:'叶', name:{zh:'树叶沙沙',en:'Rustling Leaves'}, land:{zh:'阔叶林 · 林冠',en:'Broadleaf canopy'}, tag:'2–4 kHz gust envelope'},
+  {id:'wind',     zh:'风', name:{zh:'高原的风',en:'Highland Wind'},   land:{zh:'草原 · 山脊',en:'Grassland · ridge'}, tag:'bandpass sweep 260–900 Hz'},
+  {id:'fire',     zh:'火', name:{zh:'篝火',en:'Campfire'},            land:{zh:'林间营地 · 夜',en:'Forest camp · night'}, tag:'low rumble + crackle transients'},
+  {id:'birds',    zh:'鸟', name:{zh:'晨间鸟鸣',en:'Dawn Birdsong'},   land:{zh:'晨林 · 灌丛',en:'Morning woods · thicket'}, tag:'2–5 kHz frequency glides'},
+  {id:'crickets', zh:'虫', name:{zh:'夏夜虫鸣',en:'Summer Crickets'}, land:{zh:'田野 · 夏夜',en:'Fields · summer night'}, tag:'4.3 / 4.75 kHz pulses'}
+];
+const SCENES = [
+  {id:'morning',  name:{zh:'晨起唤醒',en:'Morning Wake'},         desc:{zh:'鸟鸣和溪水，轻轻醒过来',en:'Birds and a stream to wake gently'}, when:{zh:'早晨 · 家中',en:'Morning · home'}, min:3, mix:{birds:.5, stream:.4}},
+  {id:'commute',  name:{zh:'通勤路上',en:'On the Commute'},       desc:{zh:'稳定的雨声，替你挡住车厢里的嘈杂',en:'Steady rain to soften a noisy ride'}, when:{zh:'早晚高峰 · 移动中',en:'Rush hour · on the move'}, min:10, mix:{rain:.7, wind:.3, stream:.3}},
+  {id:'pause',    name:{zh:'片刻小憩',en:'A Moment’s Rest'},   desc:{zh:'工位、排队、电梯里，喘一口气',en:'At your desk, in a queue, in the lift'}, when:{zh:'白天 · 随处',en:'Daytime · anywhere'}, min:1, mix:{stream:.6, birds:.4}},
+  {id:'before',   name:{zh:'临场静心',en:'Calm Before'}, desc:{zh:'跟着海浪放慢呼吸',en:'Slow your breath with the waves'}, when:{zh:'白天 · 紧张时',en:'Daytime · when tense'}, min:3, mix:{waves:.65}, breath:true},
+  {id:'noon',     name:{zh:'午休片刻',en:'Midday Rest'},          desc:{zh:'午后低谷，闭眼听一会儿海',en:'Close your eyes through the afternoon dip'}, when:{zh:'中午 · 工作场所',en:'Midday · at work'}, min:5, mix:{waves:.65, birds:.35, leaves:.3}},
+  {id:'alone',    name:{zh:'独处时刻',en:'Time Alone'},           desc:{zh:'篝火和雨声，陪你坐一会儿',en:'A fire and rain to keep you company'}, when:{zh:'傍晚到夜间 · 家中',en:'Evening · home'}, min:10, mix:{fire:.5, rain:.45}},
+  {id:'winddown', name:{zh:'睡前放空',en:'Winding Down'},         desc:{zh:'虫鸣与远处的溪水，停下思绪',en:'Crickets and a far-off stream to settle thoughts'}, when:{zh:'夜间 · 床上',en:'Night · in bed'}, min:15, mix:{crickets:.4, stream:.35, wind:.2}},
+  {id:'night',    name:{zh:'夜里醒来',en:'Awake at Night'},       desc:{zh:'星空下的虫鸣与风，画面变暗',en:'Crickets and wind under the stars, dimmed visuals'}, when:{zh:'深夜 · 床上',en:'Small hours · in bed'}, min:0, mix:{crickets:.35, wind:.25, snow:.2}, dim:true}
+];
+const REASON = {
+  morning:{zh:'早上好，用鸟鸣和溪水慢慢醒过来。',en:'Good morning. Wake slowly with birds and a stream.'},
+  commute:{zh:'路上有点吵，让雨声替你挡一挡。',en:'A noisy ride? Let the rain soften it.'},
+  pause:{zh:'忙了一阵，抽一分钟喘口气。',en:'You’ve been busy. Take one minute to breathe.'},
+  before:{zh:'有点紧张也正常，跟着海浪放慢呼吸。',en:'Feeling tense is normal. Slow down with the waves.'},
+  noon:{zh:'午后容易犯困，为你选了午休片刻。',en:'Afternoons get heavy, so here’s a midday rest.'},
+  alone:{zh:'一个人的时候，有篝火和雨陪着你。',en:'Some time alone, with a fire and rain for company.'},
+  winddown:{zh:'该慢下来了，准备好好睡一觉。',en:'Time to slow down for sleep.'},
+  night:{zh:'醒了也没关系，在星空下听一会儿。',en:'Awake? That’s okay. Listen for a while under the stars.'}
+};
+const EMOS = [
+  {id:'anxious',   name:{zh:'焦虑',en:'anxious'},   mix:{waves:.6, stream:.35, birds:.3}, breath:true, voice:'drop', hint:'hintBreath', q:'david'},
+  {id:'tense',     name:{zh:'紧张',en:'tense'},     scene:'before', mix:{rain:.6, wind:.3, waves:.4}, breath:true, hint:'hintDrag', q:'sushi1'},
+  {id:'sad',       name:{zh:'伤心',en:'sad'},       mix:{birds:.4, stream:.45}, voice:'flake', hint:'hintTouch', q:'gibran'},
+  {id:'afraid',    name:{zh:'恐惧',en:'afraid'},    mix:{fire:.45, snow:.45}, hint:'hintSit', q:'brown'},
+  {id:'irritable', name:{zh:'烦躁',en:'irritable'}, mix:{leaves:.5, wind:.4}, hint:'hintDrag', q:'tnhAnger'},
+  {id:'tired',     name:{zh:'疲惫',en:'tired'},     mix:{birds:.45, stream:.4}, voice:'bird', hint:'hintTouch', q:'benshahar'},
+  {id:'sleepless', name:{zh:'睡不着',en:'unable to sleep'}, scene:'winddown', hint:'hintStart', q:'dufu'},
+  {id:'relax',     name:{zh:'只是想放松',en:'like unwinding'}, hint:'hintStart', q:'zuosi'}
+];
+const EMO_LABEL = {anxious:{zh:'焦虑',en:'Anxious'},tense:{zh:'紧张',en:'Tense'},sad:{zh:'伤心',en:'Sad'},afraid:{zh:'恐惧',en:'Afraid'},irritable:{zh:'烦躁',en:'Irritable'},tired:{zh:'疲惫',en:'Tired'},sleepless:{zh:'睡不着',en:'Can’t sleep'},relax:{zh:'只是想放松',en:'Just want to unwind'}};
+const BODY = [
+  {id:'head',    name:{zh:'头',en:'Head'},     s:[{zh:'发胀',en:'Pressure'},{zh:'昏沉',en:'Foggy'},{zh:'像被箍住',en:'Tight band'}]},
+  {id:'eyes',    name:{zh:'眼睛',en:'Eyes'},   s:[{zh:'酸涩',en:'Sore'},{zh:'发干',en:'Dry'}]},
+  {id:'neck',    name:{zh:'肩颈',en:'Neck & shoulders'}, s:[{zh:'发紧',en:'Tight'},{zh:'僵硬',en:'Stiff'},{zh:'像压着东西',en:'Weighed down'}]},
+  {id:'chest',   name:{zh:'胸口',en:'Chest'},  s:[{zh:'发闷',en:'Heavy'},{zh:'堵着',en:'Blocked'},{zh:'心跳很快',en:'Racing heart'}]},
+  {id:'breath',  name:{zh:'呼吸',en:'Breath'}, s:[{zh:'又浅又急',en:'Shallow and quick'},{zh:'吸不满',en:'Can’t get a full breath'}]},
+  {id:'stomach', name:{zh:'胃',en:'Stomach'},  s:[{zh:'打结',en:'Knotted'},{zh:'翻腾',en:'Churning'},{zh:'没胃口',en:'No appetite'}]},
+  {id:'hands',   name:{zh:'手',en:'Hands'},    s:[{zh:'冰凉',en:'Cold'},{zh:'出汗',en:'Sweaty'},{zh:'微微发抖',en:'A little shaky'}]},
+  {id:'whole',   name:{zh:'全身',en:'Whole body'}, s:[{zh:'沉重',en:'Heavy'},{zh:'坐立不安',en:'Restless'},{zh:'累',en:'Worn out'}]}
+];
+const POSTS = [
+  {id:'shoulders', zh:'肩膀落下来了', en:'My shoulders dropped', parts:['neck']},
+  {id:'deeper',    zh:'呼吸变深变慢了', en:'My breathing is slower and deeper', parts:['breath','chest']},
+  {id:'chest',     zh:'胸口松开了一点', en:'My chest loosened a little', parts:['chest']},
+  {id:'warm',      zh:'手变暖了', en:'My hands feel warmer', parts:['hands']},
+  {id:'eyes',      zh:'眼睛没那么酸了', en:'My eyes feel less sore', parts:['eyes']},
+  {id:'head',      zh:'头脑清爽了一些', en:'My head feels clearer', parts:['head']},
+  {id:'stomach',   zh:'胃里松了一些', en:'My stomach has settled a little', parts:['stomach']},
+  {id:'sleepy',    zh:'身体变沉，有点想睡', en:'Heavy and a little sleepy', parts:['whole']},
+  {id:'still',     zh:'还是有些紧', en:'Still a bit tight', neutral:true},
+  {id:'unsure',    zh:'说不清，但好像不一样了', en:'Hard to say, but something shifted', neutral:true}
+];
+/* g: true = Chinese classic (原文 shown first in both languages) */
+const QUOTES = {
+  zuosi:{g:true, zh:'非必丝与竹，山水有清音。', en:'No need for strings or flutes — hills and streams have their own clear music.', by:{zh:'左思，西晋诗人',en:'Zuo Si, Western Jin poet'}, src:{zh:'《招隐诗》',en:'Poem on Seeking a Recluse'}},
+  zongbing:{g:true, zh:'老疾俱至，名山恐难遍睹，唯当澄怀观道，卧以游之。', en:'Old and ill, I may never see the great mountains. I will clear my heart and wander them lying down.', by:{zh:'宗炳，南朝宋画家',en:'Zong Bing, painter of the Liu Song dynasty'}, src:{zh:'《宋书·宗炳传》',en:'Book of Song'}},
+  wangwei:{g:true, zh:'空山不见人，但闻人语响。', en:'Empty mountain, no one in sight — only the echo of voices.', by:{zh:'王维，唐代诗人',en:'Wang Wei, Tang poet'}, src:{zh:'《鹿柴》',en:'Deer Park'}},
+  dufu:{g:true, zh:'随风潜入夜，润物细无声。', en:'It slips in with the wind at night and nourishes all without a sound.', by:{zh:'杜甫，唐代诗人',en:'Du Fu, Tang poet'}, src:{zh:'《春夜喜雨》',en:'Welcome Rain on a Spring Night'}},
+  sushi1:{g:true, zh:'竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。', en:'Bamboo staff and straw sandals beat a horse — who’s afraid? In a straw cloak I’ll take whatever rain life brings.', by:{zh:'苏轼，北宋文学家',en:'Su Shi, Northern Song writer'}, src:{zh:'《定风波》',en:'Calming the Waves'}},
+  sushi2:{g:true, zh:'回首向来萧瑟处，归去，也无风雨也无晴。', en:'Looking back at the bleak road I walked: going home, there was neither storm nor sun.', by:{zh:'苏轼，北宋文学家',en:'Su Shi, Northern Song writer'}, src:{zh:'《定风波》',en:'Calming the Waves'}},
+  neijing:{g:true, zh:'恬惔虚无，真气从之，精神内守，病安从来。', en:'Calm and unburdened, vital energy follows; keep the spirit within, and where could illness come from?', by:{zh:'《黄帝内经》',en:'The Yellow Emperor’s Inner Classic'}, src:{zh:'《素问·上古天真论》',en:'Suwen, chapter 1'}},
+  changjian:{g:true, zh:'万籁此都寂，但余钟磬音。', en:'All sounds fall still; only the temple bell remains.', by:{zh:'常建，唐代诗人',en:'Chang Jian, Tang poet'}, src:{zh:'《题破山寺后禅院》',en:'Behind Poshan Temple'}},
+  taoyuanming:{g:true, zh:'结庐在人境，而无车马喧。', en:'I built my hut among people, yet hear no noise of carts and horses.', by:{zh:'陶渊明，东晋诗人',en:'Tao Yuanming, Eastern Jin poet'}, src:{zh:'《饮酒·其五》',en:'Drinking Wine, No. 5'}},
+  xunzi:{g:true, zh:'夫乐者，乐也，人情之所必不免也。', en:'Music is joy, something human feeling cannot do without.', by:{zh:'荀子，战国思想家',en:'Xunzi, Warring States thinker'}, src:{zh:'《荀子·乐论》',en:'Discourse on Music'}},
+  david:{zh:'情绪是信息，不是命令。', en:'Emotions are data, not directives.', by:{zh:'Susan David，哈佛医学院心理学家',en:'Susan David, Harvard Medical School psychologist'}, src:{zh:'《情绪敏捷》(2016)',en:'Emotional Agility (2016)'}},
+  siegel:{zh:'说出它，才能安抚它。', en:'Name it to tame it.', by:{zh:'Daniel Siegel，加州大学洛杉矶分校精神病学临床教授',en:'Daniel Siegel, clinical professor of psychiatry, UCLA'}, src:{zh:'《全脑教养法》(2011)',en:'The Whole-Brain Child (2011)'}},
+  kabatzinn:{zh:'你无法让海浪停下，但可以学会冲浪。', en:'You can’t stop the waves, but you can learn to surf.', by:{zh:'Jon Kabat-Zinn，正念减压疗法创立者',en:'Jon Kabat-Zinn, founder of MBSR'}, src:{zh:'(1994)',en:'Wherever You Go, There You Are (1994)'}},
+  tnh:{zh:'吸气，我平静身体；呼气，我微笑。', en:'Breathing in, I calm my body. Breathing out, I smile.', by:{zh:'一行禅师，越南禅师',en:'Thich Nhat Hanh, Vietnamese Zen master'}, src:{zh:'《活得安详》(1987)',en:'Being Peace (1987)'}},
+  tnhAnger:{zh:'像母亲抱起哭泣的婴儿那样，温柔地抱住自己的愤怒。（意译）', en:'Hold your anger the way a mother holds a crying baby. (paraphrase)', by:{zh:'一行禅师，越南禅师',en:'Thich Nhat Hanh, Vietnamese Zen master'}, src:{zh:'《生气》(2001)',en:'Anger (2001)'}},
+  gibran:{zh:'你的痛苦，是包裹着领悟的外壳正在破开。', en:'Your pain is the breaking of the shell that encloses your understanding.', by:{zh:'纪伯伦，诗人',en:'Kahlil Gibran, poet'}, src:{zh:'《先知》(1923)',en:'The Prophet (1923)'}},
+  brown:{zh:'脆弱不是软弱。', en:'Vulnerability is not weakness.', by:{zh:'Brené Brown，休斯顿大学研究教授',en:'Brené Brown, research professor, University of Houston'}, src:{zh:'《无所畏惧》(2012)',en:'Daring Greatly (2012)'}},
+  benshahar:{zh:'允许自己做一个普通人。', en:'Give yourself permission to be human.', by:{zh:'Tal Ben-Shahar，积极心理学学者',en:'Tal Ben-Shahar, positive psychology scholar'}, src:{zh:'《幸福的方法》(2007)',en:'Happier (2007)'}},
+  rogers:{zh:'当我接纳真实的自己，我才能改变。', en:'…when I accept myself just as I am, then I can change.', by:{zh:'Carl Rogers，人本主义心理学创始人之一',en:'Carl Rogers, a founder of humanistic psychology'}, src:{zh:'《个人形成论》(1961)',en:'On Becoming a Person (1961)'}},
+  dweck:{zh:'成为，比已经是更好。', en:'Becoming is better than being.', by:{zh:'Carol Dweck，斯坦福大学心理学教授',en:'Carol Dweck, psychologist, Stanford University'}, src:{zh:'《终身成长》(2006)',en:'Mindset (2006)'}},
+  rilke:{zh:'没有一种感受是永远的。', en:'No feeling is final.', by:{zh:'里尔克，奥地利诗人',en:'Rainer Maria Rilke, Austrian poet'}, src:{zh:'《时辰之书》(1905)',en:'Book of Hours (1905), tr. Barrows & Macy'}},
+  carson:{zh:'自然那一遍遍重复的旋律里，有一种无尽的疗愈。', en:'There is something infinitely healing in the repeated refrains of nature.', by:{zh:'Rachel Carson，海洋生物学家',en:'Rachel Carson, marine biologist'}, src:{zh:'《惊奇之心》(1965)',en:'The Sense of Wonder (1965)'}},
+  fredrickson:{zh:'积极情绪会拓宽注意和思路，一点点积累起长期的心理资源。（意译）', en:'Positive emotions broaden attention and build lasting resources. (paraphrase)', by:{zh:'Barbara Fredrickson，北卡罗来纳大学心理学教授',en:'Barbara Fredrickson, psychologist, UNC Chapel Hill'}, src:{zh:'扩展-建构理论 (2001)',en:'Broaden-and-build theory (2001)'}},
+  keats:{zh:'大地的诗歌永不止息。', en:'The poetry of earth is never dead.', by:{zh:'济慈，英国诗人',en:'John Keats, English poet'}, src:{zh:'《咏蝈蝈与蟋蟀》(1816)',en:'On the Grasshopper and Cricket (1816)'}},
+  thoreau:{zh:'我们需要荒野这剂补药。', en:'We need the tonic of wildness.', by:{zh:'梭罗，美国自然文学作家',en:'Henry David Thoreau'}, src:{zh:'《瓦尔登湖》(1854)',en:'Walden (1854)'}},
+  muir:{zh:'来森林吧，这里有安歇。', en:'Come to the woods, for here is rest.', by:{zh:'John Muir，美国自然学家',en:'John Muir, naturalist'}, src:{zh:'日记',en:'Journals'}},
+  novalis:{zh:'每一种疾病都是一个音乐问题，每一次疗愈都是一个音乐的解答。', en:'Every disease is a musical problem; every cure is a musical solution.', by:{zh:'诺瓦利斯，德国浪漫主义诗人',en:'Novalis, German Romantic poet'}, src:{zh:'《断片集》',en:'Fragments'}},
+  oliveros:{zh:'深度聆听，是用一切可能的方式，去听一切可能听见的声音。', en:'Deep Listening is listening in every possible way to every thing possible to hear…', by:{zh:'Pauline Oliveros，作曲家，“深度聆听”创立者',en:'Pauline Oliveros, composer, founder of Deep Listening'}, src:{zh:'(2005)',en:'Deep Listening (2005)'}},
+  original:{zh:'雨会停，潮会回来，你也会。', en:'The rain will stop. The tide returns. So will you.', by:{zh:'口袋自然',en:'Pocket Nature'}, src:{zh:'',en:''}}
+};
+const DAILY = ['zuosi','zongbing','carson','wangwei','novalis','thoreau','xunzi','keats','muir','dufu','oliveros','changjian'];
+const END_POOL = {big:['carson','fredrickson','zongbing','changjian'], small:['dweck','rilke','sushi2'], hard:['rogers','brown','benshahar','original','sushi2'], none:['zongbing','neijing','changjian','novalis','muir']};
+const EVID = [
+  {g:'A', k:'res', t:{zh:'自然声的健康益处',en:'Health benefits of natural sounds'}, f:{zh:'汇总 36 项研究：自然声与压力降低、情绪和认知改善有关。水声对情绪帮助最大，鸟鸣最能减压。',en:'Across 36 studies, natural sounds were linked to less stress and better mood and cognition. Water helped mood most; birdsong eased stress most.'}, c:'Buxton et al., PNAS (2021)', u:{zh:'场景配方',en:'Scene recipes'}},
+  {g:'A', k:'res', t:{zh:'慢呼吸的身心效应',en:'Slow breathing, body and mind'}, f:{zh:'系统综述：约每分钟 6 次的慢呼吸，与心率变异性升高、焦虑降低有关。',en:'A systematic review linked breathing about six times a minute to higher heart-rate variability and lower anxiety.'}, c:'Zaccaro et al., Front. Hum. Neurosci. (2018)', u:{zh:'跟海浪呼吸',en:'Breathe with the waves'}},
+  {g:'A', k:'res', t:{zh:'五行音乐与失眠',en:'Five-element music and insomnia'}, f:{zh:'12 项研究、1,346 名失眠患者：五行音乐改善睡眠质量的效果优于常规治疗。',en:'Across 12 studies and 1,346 patients, five-element music improved sleep quality more than usual care.'}, c:'中西医结合护理 (2022)', u:{zh:'睡前放空',en:'Winding Down'}},
+  {g:'B', k:'res', t:{zh:'鸟鸣缓解焦虑',en:'Birdsong eases anxiety'}, f:{zh:'295 人随机听 6 分钟声音：鸟鸣降低了焦虑和偏执思维，交通噪声让抑郁感上升。',en:'Of 295 people randomly assigned six minutes of sound, those hearing birdsong felt less anxious and paranoid; traffic noise raised low mood.'}, c:'Stobbe et al., Scientific Reports (2022)', u:{zh:'焦虑时的推荐',en:'Suggestions for anxiety'}},
+  {g:'B', k:'res', t:{zh:'蟋蟀声与汽车喇叭',en:'Cricket chirps and car horns'}, f:{zh:'听自然声景后，注意力任务成绩明显提高；听城市声景则没有。',en:'After natural soundscapes, attention task scores rose; after urban soundscapes they did not.'}, c:'Van Hedger, Berman et al., Psychon. Bull. Rev. (2019)', u:{zh:'片刻小憩',en:'One-Minute Pause'}},
+  {g:'B', k:'res', t:{zh:'中国大学生与自然声 App',en:'Chinese students and a nature-sound app'}, f:{zh:'71 名大学生每天用自然声 App 30 分钟、持续 4 周，积极情绪和工作记忆提升。',en:'71 university students used a nature-sound app 30 minutes a day for four weeks; positive mood and working memory improved.'}, c:'Luo, Wang & Chen, Front. Psychol. (2021)', u:{zh:'产品形态',en:'Product format'}},
+  {g:'B', k:'res', t:{zh:'压力后的恢复',en:'Recovery after stress'}, f:{zh:'压力任务后，听自然声比听交通噪声恢复得更快。',en:'After a stressful task, people recovered faster with nature sounds than with traffic noise.'}, c:'Alvarsson, Wiens & Nilsson, IJERPH (2010)', u:{zh:'通勤路上',en:'On the Commute'}},
+  {g:'B', k:'res', t:{zh:'自然声与大脑',en:'Natural sounds and the brain'}, f:{zh:'听自然声时，注意力更多转向外部，“休息与消化”的神经活动增加。',en:'Natural sounds shifted attention outward and increased rest-and-digest nervous activity.'}, c:'Gould van Praag et al., Scientific Reports (2017)', u:{zh:'九种地貌',en:'Nine landscapes'}},
+  {g:'C', k:'res', t:{zh:'古筝音色的五行音乐',en:'Five-element music on guzheng'}, f:{zh:'148 名医学生每晚听 15 分钟、持续 2 周，焦虑和抑郁评分下降，古筝降焦虑最明显。',en:'148 medical students listened 15 minutes nightly for two weeks; anxiety and low mood fell, most with guzheng.'}, c:'Lyu, Li & Yao, Front. Psychol. (2025)', u:{zh:'古筝触摸音色',en:'Guzheng touch voice'}},
+  {g:'C', k:'res', t:{zh:'窗外的树',en:'A view of trees'}, f:{zh:'窗外能看见树的术后病人，住院更短，止痛药用得更少。',en:'Surgical patients with a view of trees left hospital sooner and needed fewer painkillers.'}, c:'Ulrich, Science (1984)', u:{zh:'会动的自然画布',en:'The living canvas'}},
+  {g:'D', k:'cls', t:{zh:'注意力恢复理论',en:'Attention Restoration Theory'}, f:{zh:'自然以“柔和的吸引”占住注意，让工作时绷紧的注意力得到休息。',en:'Nature holds attention through soft fascination, letting effortful attention rest.'}, c:'Kaplan, J. Environ. Psychol. (1995)', u:{zh:'数一数声层',en:'Count the layers'}},
+  {g:'D', k:'cls', t:{zh:'卧游',en:'Wandering at rest'}, f:{zh:'宗炳年老多病，把山水画在屋里，“卧以游之”。这是口袋自然的古代原型。',en:'Zong Bing, too old and ill to travel, painted mountains on his walls and wandered them lying down — the ancestor of this app.'}, c:'《宋书·宗炳传》', u:{zh:'产品理念',en:'Core idea'}},
+  {g:'D', k:'cls', t:{zh:'五音与五志',en:'Five tones, five emotions'}, f:{zh:'“在音为角，在志为怒……在音为羽，在志为恐。”触摸冰晶和古筝都用宫商角徵羽五声音阶。',en:'The Inner Classic pairs five tones with five emotions. The ice chime and guzheng play the gong-shang-jue-zhi-yu scale.'}, c:'《黄帝内经·素问·阴阳应象大论》', u:{zh:'五声音阶',en:'Pentatonic touch'}},
+  {g:'D', k:'cls', t:{zh:'声由心生',en:'Sound arises from the heart'}, f:{zh:'“凡音之起，由人心生也。”声音与心互相感应，是“心里天气”的文化依据。',en:'“All sound arises from the human heart.” Sound and feeling move each other — the root of Inner Weather.'}, c:'《礼记·乐记》', u:{zh:'心里天气',en:'Inner Weather'}},
+  {g:'D', k:'cls', t:{zh:'深度聆听',en:'Deep Listening'}, f:{zh:'把注意力放在所有声音上，再收拢到某一个声音，是一种不需要乐器的冥想。',en:'Attend to all sounds at once, then gather onto one — meditation without an instrument.'}, c:'Oliveros, Deep Listening (2005)', u:{zh:'练习流程',en:'Practice flow'}}
+];
+const VOICES = [
+  {id:'drop', name:{zh:'雨滴',en:'Raindrop'}}, {id:'pebble', name:{zh:'溪石',en:'Pebble'}}, {id:'flake', name:{zh:'冰晶',en:'Ice chime'}},
+  {id:'guzheng', name:{zh:'古筝',en:'Guzheng'}}, {id:'bird', name:{zh:'鸟鸣',en:'Birdsong'}}
+];
+const DURS = [1, 3, 5, 10, 15, 0];
+const TONE = [{zh:'宫',en:'gong'},{zh:'商',en:'shang'},{zh:'角',en:'jue'},{zh:'徵',en:'zhi'},{zh:'羽',en:'yu'}];
+const PENTA = [0,2,4,7,9];
+
+/* ---------- state ---------- */
+const state = {levels:{}, last:{}, duration:300, remaining:300, elapsed:0, playing:false, started:false, breath:false, voice:'drop',
+  scene:null, rec:null, pre:null, dim:false, hintKey:'hintStart', endModel:null, emoRec:null};
+SOUNDS.forEach(s => { state.levels[s.id] = 0; state.last[s.id] = .5; });
+const todayStr = d => { d = d || new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
+const dayKey = 'pn-min-' + todayStr();
+let todaySec = Number(LS.get(dayKey, 0)) || 0, lastSave = todaySec;
+
+/* ---------- audio engine ---------- */
+let ctx = null, master, comp, analyser, freqData, touchBus, touchGain, touchFilter;
+const voices = {}, NB = {};
+let waveB = 0, breathT0 = 0;
+function buildNoise(kind){
+  const len = Math.floor(ctx.sampleRate * 5), fade = Math.floor(ctx.sampleRate * .08), tmp = new Float32Array(len + fade);
+  let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0,last=0;
+  for (let i = 0; i < tmp.length; i++){
+    const w = Math.random()*2 - 1;
+    if (kind === 'white') tmp[i] = w * .5;
+    else if (kind === 'pink'){ b0=.99886*b0+w*.0555179; b1=.99332*b1+w*.0750759; b2=.969*b2+w*.153852; b3=.8665*b3+w*.3104856; b4=.55*b4+w*.5329522; b5=-.7616*b5-w*.016898; tmp[i]=(b0+b1+b2+b3+b4+b5+b6+w*.5362)*.11; b6=w*.115926; }
+    else { last = (last + .02*w) / 1.02; tmp[i] = last * 3.5; }
+  }
+  const buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
+  for (let i = 0; i < len; i++) d[i] = tmp[i + fade];
+  for (let i = 0; i < fade; i++){ const a = i / fade; d[len-fade+i] = tmp[len+i]*(1-a) + tmp[i]*a; }
+  return buf;
+}
+const gn = v => { const g = ctx.createGain(); g.gain.value = v; return g; };
+const filt = (type, f, q=.7) => { const b = ctx.createBiquadFilter(); b.type = type; b.frequency.value = f; b.Q.value = q; return b; };
+const pan = v => { if (ctx.createStereoPanner){ const p = ctx.createStereoPanner(); p.pan.value = v; return p; } return gn(1); };
+const chain = (...n) => { for (let i = 0; i < n.length-1; i++) n[i].connect(n[i+1]); return n[n.length-1]; };
+const rnd = (a, b) => a + Math.random()*(b-a);
+const setP = (param, v, tc=.15) => param.setTargetAtTime(v, ctx.currentTime, tc);
+function src(kind){ const s = ctx.createBufferSource(); s.buffer = NB[kind]; s.loop = true; s.start(0, Math.random()*4); return s; }
+function burst(out, t0, dur, type, f, q, peak){
+  const s = ctx.createBufferSource(); s.buffer = NB.white; const g = gn(0);
+  chain(s, filt(type, f, q), g, pan(rnd(-.8,.8)), out);
+  g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(peak, t0+.002); g.gain.exponentialRampToValueAtTime(.0001, t0+dur);
+  s.start(t0, Math.random()*4); s.stop(t0+dur+.05);
+}
+function tone(out, t0, f0, f1, dur, peak, pv){
+  const o = ctx.createOscillator(); o.type = 'sine';
+  o.frequency.setValueAtTime(f0, t0); o.frequency.exponentialRampToValueAtTime(f1, t0+dur);
+  const g = gn(0); chain(o, g, pan(pv ?? rnd(-.7,.7)), out);
+  g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(peak, t0+Math.min(.01, dur*.2)); g.gain.exponentialRampToValueAtTime(.0001, t0+dur);
+  o.start(t0); o.stop(t0+dur+.05);
+}
+const pluckCache = {};
+function pluck(out, t0, f, peak, pv){
+  const key = Math.round(f);
+  let buf = pluckCache[key];
+  if (!buf){
+    const sr = ctx.sampleRate, N = Math.floor(sr * 2.4), P = Math.max(2, Math.round(sr / f));
+    buf = ctx.createBuffer(1, N, sr); const d = buf.getChannelData(0), ring = new Float32Array(P);
+    let prev = 0; for (let i = 0; i < P; i++){ const w = Math.random()*2 - 1; prev = prev*.5 + w*.5; ring[i] = prev; }
+    let idx = 0;
+    for (let i = 0; i < N; i++){ const a = ring[idx], b = ring[(idx+1) % P]; ring[idx] = .4975*(a+b); d[i] = a; idx = (idx+1) % P; }
+    pluckCache[key] = buf;
+  }
+  const s = ctx.createBufferSource(); s.buffer = buf;
+  s.playbackRate.setValueAtTime(1, t0); s.playbackRate.linearRampToValueAtTime(1.012, t0+.35); s.playbackRate.linearRampToValueAtTime(1, t0+.8);
+  const g = gn(peak); chain(s, filt('lowpass', 3800, .5), g, pan(pv), out);
+  g.gain.setValueAtTime(peak, t0); g.gain.exponentialRampToValueAtTime(.0001, t0+2.3);
+  s.start(t0); s.stop(t0+2.4);
+}
+function birdPhrase(out, t0, peak){
+  const k = Math.random(), pv = rnd(-.7,.7);
+  if (k < .4){ const f = rnd(3000,4500), n = 4 + Math.floor(Math.random()*6); for (let i=0;i<n;i++) tone(out, t0+i*.07, f, f*.8, .05, peak, pv); }
+  else if (k < .75){ let tt = t0; const n = 2 + Math.floor(Math.random()*4); for (let i=0;i<n;i++){ const f = rnd(2200,4800), d = rnd(.08,.22); tone(out, tt, f, f*rnd(.7,1.4), d, peak, pv); tt += d + rnd(.04,.14); } }
+  else { const f = rnd(1800,2600); tone(out, t0, f, f*1.8, .35, peak*.8, pv); tone(out, t0+.45, f*1.6, f, .4, peak*.8, pv); }
+}
+const BUILD = {
+  rain(out){ chain(src('pink'), filt('highpass',500), filt('lowpass',7000), gn(.55), out);
+    return {rate:16, event:t0 => burst(out, t0, rnd(.02,.07), 'bandpass', rnd(1500,6000), 3, rnd(.1,.45))}; },
+  stream(out){ chain(src('brown'), filt('bandpass',650,.6), gn(1.3), out); const hf = filt('bandpass',1800,1.2); chain(src('pink'), hf, gn(.22), out);
+    return {rate:7, event:t0 => { const f = rnd(350,1150); tone(out, t0, f, f*rnd(1.4,1.9), rnd(.05,.11), rnd(.04,.1)); }, update:x => setP(hf.frequency, 1500 + 500*Math.sin(x*.7) + 300*Math.sin(x*1.9), .2)}; },
+  waves(out){ const lp = filt('lowpass',600,.5), g = gn(.4); chain(src('brown'), lp, g, out); const fg = gn(0); chain(src('white'), filt('highpass',2500), fg, out);
+    return {update:() => { const b = waveB; setP(lp.frequency, 250 + 1600*b, .12); setP(g.gain, .2 + 1.0*b, .12); setP(fg.gain, .22*b*b*b, .12); }}; },
+  snow(out){ chain(src('brown'), filt('lowpass',260,.5), gn(1.0), out); const hg = gn(.015); chain(src('white'), filt('highpass',6500), hg, out);
+    return {rate:1.1, event:t0 => { const f = rnd(2400,4600); tone(out, t0, f, f*.98, rnd(.5,.9), rnd(.008,.018)); }, update:x => setP(hg.gain, .01 + .012*(.5+.5*Math.sin(x*.3)), .5)}; },
+  leaves(out){ const g1 = gn(.3), g2 = gn(.2); chain(src('white'), filt('bandpass',3200,.7), g1, out); chain(src('pink'), filt('bandpass',900,.6), g2, out); let gust = .4, tgt = .4;
+    return {rate:10, event:t0 => burst(out, t0, rnd(.008,.028), 'bandpass', rnd(4000,7000), 2, .04*gust + .02), update:() => { if (Math.random() < .02) tgt = rnd(.15,1); gust += (tgt-gust)*.03; setP(g1.gain, .08 + .45*gust, .25); setP(g2.gain, .05 + .25*gust, .25); }}; },
+  wind(out){ const bp = filt('bandpass',500,1.6), g = gn(.5); chain(src('pink'), bp, g, out); chain(src('brown'), filt('lowpass',180), gn(.5), out);
+    return {update:x => { const s = .5 + .3*Math.sin(x*.21) + .2*Math.sin(x*.53+1); setP(bp.frequency, 260 + 650*s, .3); setP(g.gain, .25 + .9*s, .3); }}; },
+  fire(out){ chain(src('brown'), filt('lowpass',320), gn(.7), out); chain(src('pink'), filt('bandpass',1300,.5), gn(.05), out);
+    return {rate:6, event:t0 => { const n = Math.random() < .25 ? 3 : 1; for (let i=0;i<n;i++) burst(out, t0 + i*rnd(.01,.04), rnd(.004,.016), 'highpass', rnd(1200,3200), .7, rnd(.25,.75)); }}; },
+  birds(out){ return {rate:.45, event:t0 => birdPhrase(out, t0, .06)}; },
+  crickets(out){ return {rate:2.2, event:t0 => { const hi = Math.random() < .5, f = hi ? 4750 : 4300, pv = hi ? .5 : -.5; for (let i=0;i<4;i++) tone(out, t0+i*.032, f, f*1.01, .022, .035, pv); }}; }
+};
+function initAudio(){
+  if (ctx) return;
+  const AC = window.AudioContext || window.webkitAudioContext; ctx = new AC();
+  ['white','pink','brown'].forEach(k => NB[k] = buildNoise(k));
+  master = gn(0); comp = ctx.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 3;
+  analyser = ctx.createAnalyser(); analyser.fftSize = 1024; freqData = new Uint8Array(analyser.frequencyBinCount);
+  chain(master, comp, analyser, ctx.destination);
+  SOUNDS.forEach(s => { const g = gn(0); g.connect(master); const v = BUILD[s.id](g); v.gain = g; voices[s.id] = v; const l = state.levels[s.id]; g.gain.value = l*l; });
+  touchBus = gn(.9); touchBus.connect(comp);
+  touchGain = gn(0); touchFilter = filt('bandpass', 2000, .9); chain(src('white'), touchFilter, touchGain, touchBus);
+}
+function rampMaster(v, secs){ if (!ctx) return; const n = ctx.currentTime; master.gain.cancelScheduledValues(n); master.gain.setValueAtTime(master.gain.value, n); master.gain.linearRampToValueAtTime(v, n + secs); }
+const masterLevel = () => state.dim ? .55 : .9;
+
+/* ---------- breath / waves ---------- */
+const ease = u => .5 - .5*Math.cos(Math.PI*Math.min(1, Math.max(0, u)));
+function breathPhase(x){ const p = ((x - breathT0) % 10 + 10) % 10; return p < 4 ? {b:ease(p/4), inhale:true, left:4-p} : {b:1-ease((p-4)/6), inhale:false, left:10-p}; }
+function computeWave(x){ return state.breath ? breathPhase(x).b : Math.pow(.5 - .5*Math.cos(2*Math.PI*x/9.5), 1.4); }
+
+/* ---------- scheduler & timer ---------- */
+let lastTick = performance.now(), fading = false, hintTimer = 0;
+setInterval(() => {
+  const now = performance.now(), dt = Math.min(.2, (now - lastTick)/1000); lastTick = now;
+  const x = now/1000; waveB = computeWave(x);
+  if (!ctx || !state.playing) return;
+  const t0 = ctx.currentTime + .05;
+  SOUNDS.forEach(s => {
+    if (state.levels[s.id] < .01) return;
+    const v = voices[s.id]; v.update && v.update(x);
+    if (v.rate){ const e = v.rate*dt; let n = Math.floor(e) + (Math.random() < e % 1 ? 1 : 0); while (n--) v.event(t0 + Math.random()*dt); }
+  });
+  tickTimer(dt);
+  hintTimer += dt; if (hintTimer > 18){ hintTimer = 0; rotateHint(); }
+}, 50);
+const clockEl = { set textContent(v){ if (state.started) $('#lensMain').textContent = v; } };
+const fmt = s => { s = Math.max(0, Math.floor(s)); return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0'); };
+function renderClock(){ clockEl.textContent = state.duration ? fmt(Math.ceil(state.remaining)) : fmt(state.elapsed); }
+function resetTimer(){ state.remaining = state.duration; state.elapsed = 0; fading = false; renderClock(); }
+function saveToday(){ LS.set(dayKey, todaySec); lastSave = todaySec; renderStat(); }
+function tickTimer(dt){
+  todaySec += dt; state.elapsed += dt;
+  if (todaySec - lastSave > 5) saveToday();
+  if (state.duration){
+    state.remaining -= dt;
+    if (state.remaining <= 8 && !fading){ fading = true; rampMaster(0, Math.max(.5, state.remaining)); }
+    if (state.remaining <= 0){ endPractice(); return; }
+  }
+  renderClock();
+}
+
+/* ---------- levels, scenes, durations ---------- */
+function setLevel(id, v){
+  state.levels[id] = v; if (v > .01) state.last[id] = v;
+  if (ctx) setP(voices[id].gain.gain, v*v, .4);
+  updateCard(id); updateNow();
+}
+function applyMix(mix){ SOUNDS.forEach(s => setLevel(s.id, mix[s.id] || 0)); }
+function setDuration(min){
+  state.duration = min * 60;
+  $$('#durChips button').forEach(b => b.setAttribute('aria-pressed', Number(b.dataset.min) === min));
+  resetTimer();
+  if (state.playing) rampMaster(masterLevel(), 1.2);
+}
+function setBreath(on){
+  state.breath = on; breathT0 = performance.now()/1000;
+  renderLens();
+  if (on && state.levels.waves < .2) setLevel('waves', .6);
+}
+function setVoice(id){ state.voice = id; $$('#voiceChips button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === id)); }
+function applyScene(id){
+  const sc = SCENES.find(s => s.id === id); if (!sc) return;
+  state.scene = id; state.dim = !!sc.dim;
+  applyMix(sc.mix); setDuration(sc.min); setBreath(!!sc.breath);
+  if (state.playing) rampMaster(masterLevel(), 1.2);
+  renderRec(); setBg(id);
+}
+
+/* ---------- recommendation ---------- */
+function timeScene(d){
+  d = d || new Date(); const h = d.getHours() + d.getMinutes()/60, wk = d.getDay() === 0 || d.getDay() === 6;
+  if (h >= 6 && h < 9) return (!wk && h >= 7) ? 'commute' : 'morning';
+  if (h >= 9 && h < 11.5) return wk ? 'morning' : 'pause';
+  if (h >= 11.5 && h < 14) return 'noon';
+  if (h >= 14 && h < 17.5) return wk ? 'alone' : 'pause';
+  if (h >= 17.5 && h < 19.5) return wk ? 'alone' : 'commute';
+  if (h >= 19.5 && h < 22.5) return 'alone';
+  if (h >= 22.5 || h < 1) return 'winddown';
+  return 'night';
+}
+function renderRec(){ renderLens(); renderScenes(); }
+function renderGreet(){}
+function applyEmotion(pre){
+  const e = EMOS.find(x => x.id === pre.emos[0]); if (!e) return;
+  const h = new Date().getHours(), day = h >= 8 && h < 19;
+  let sceneId = state.scene || state.rec;
+  if (e.scene && (e.id !== 'tense' || day)) sceneId = e.scene;
+  applyScene(sceneId);
+  if (e.mix) applyMix(e.mix);
+  if (e.breath) setBreath(true);
+  if (e.voice) setVoice(e.voice);
+  state.hintKey = 'm_' + e.id;
+  if (e.id === 'afraid' || e.id === 'sleepless') state.dim = true;
+  state.emoRec = e;
+}
+
+/* ---------- session flow ---------- */
+const endcard = $('#endcard'), hint = $('#hint'), lens = $('#lens');
+let wake = null;
+async function requestWake(){ try { if (navigator.wakeLock) wake = await navigator.wakeLock.request('screen'); } catch(e){ wake = null; } }
+function releaseWake(){ try { wake && wake.release(); } catch(e){} wake = null; }
+function renderLens(){
+  const sc = SCENES.find(s => s.id === state.scene) || SCENES[0];
+  const top = $('#lensTop'), main = $('#lensMain'), sub = $('#lensSub'), cta = $('#lensCta');
+  if (!state.started){
+    top.textContent = state.scene === state.rec ? t('suggestedFor') : t('currentScene');
+    main.className = 'lens-main'; main.textContent = L(sc.name);
+    sub.textContent = L(REASON[sc.id]);
+    cta.textContent = t('tapBegin');
+  } else {
+    main.className = 'lens-main time'; main.textContent = state.duration ? fmt(Math.ceil(state.remaining)) : fmt(state.elapsed);
+    sub.textContent = SOUNDS.filter(s => state.levels[s.id] > .01).map(s => L(s.name)).join(' · ');
+    cta.textContent = state.playing ? t('tapPause') : t('tapResume');
+    if (!state.breath || !state.playing) top.textContent = state.playing ? t('listening') : t('paused');
+  }
+  $('#playbar').hidden = !state.started;
+  $('#daily').hidden = state.started;
+  lens.classList.toggle('breathing', state.started && state.breath);
+  $('#breathTgl').setAttribute('aria-pressed', state.breath);
+}
+function renderOrbs(){ renderLens(); }
+function play(){
+  initAudio(); if (ctx.state !== 'running') ctx.resume();
+  if (state.duration && state.remaining <= 0) resetTimer();
+  if (!state.started){ state.started = true; state.elapsed = 0; }
+  state.playing = true; fading = false; endcard.hidden = true;
+  rampMaster(masterLevel(), 2.5); renderLens();
+  showHint(state.hintKey); hintTimer = 0; requestWake();
+}
+function pause(){ state.playing = false; rampMaster(0, .8); renderLens(); releaseWake(); saveToday(); }
+function endPractice(){
+  if (!state.started) return;
+  state.playing = false; state.started = false; fading = false;
+  rampMaster(0, 1.2); releaseWake(); saveToday();
+  hint.hidden = true; renderLens();
+  state.sessionMin = Math.max(1, Math.round(state.elapsed/60));
+  openPost();
+}
+lens.addEventListener('click', () => { if (!state.started) openPre(); else if (state.playing) pause(); else play(); });
+$('#finishBtn').addEventListener('click', endPractice);
+$('#breathTgl').addEventListener('click', () => { setBreath(!state.breath); renderLens(); });
+document.addEventListener('keydown', e => { if (e.code === 'Space' && e.target === document.body){ e.preventDefault(); lens.click(); } });
+const HINT_CYCLE = ['hintStart','hintTouch','hintDrag','hintSit'];
+function showHint(k){ hint.textContent = t(k); hint.hidden = false; hint.dataset.k = k; }
+function rotateHint(){ if (!state.playing) return; const cur = hint.dataset.k; const base = state.hintKey && state.hintKey.startsWith('m_') ? [state.hintKey, ...HINT_CYCLE] : HINT_CYCLE; const pool = state.breath ? ['hintBreath', ...base] : base; showHint(pool[(pool.indexOf(cur) + 1) % pool.length]); }
+
+/* ---------- weather icons ---------- */
+const W_ICON = [
+  '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/>',
+  '<circle cx="8" cy="8" r="3"/><path d="M8 2.5v1.2M2.5 8h1.2M4.1 4.1l.9.9M11.9 4.1l-.9.9"/><path d="M9 19h9a3.5 3.5 0 0 0 0-7 4.5 4.5 0 0 0-8.4-1.2A3.3 3.3 0 0 0 9 19z"/>',
+  '<path d="M7 18h10a4 4 0 0 0 0-8 5 5 0 0 0-9.6-1.5A3.5 3.5 0 0 0 7 18z"/>',
+  '<path d="M7 14h10a4 4 0 0 0 0-8 5 5 0 0 0-9.6-1.5A3.5 3.5 0 0 0 7 14z"/><path d="M8 17l-1 3M12 17l-1 3M16 17l-1 3"/>',
+  '<path d="M7 14h10a4 4 0 0 0 0-8 5 5 0 0 0-9.6-1.5A3.5 3.5 0 0 0 7 14z"/><path d="M12.5 14l-2.5 4h3l-2 4"/>'
+];
+const wLevel = v => v <= 1 ? 0 : v <= 3 ? 1 : v <= 5 ? 2 : v <= 7 ? 3 : 4;
+const wSvg = (lv, size=22) => `<svg viewBox="0 0 24 24" width="${size}" height="${size}" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${W_ICON[lv]}</svg>`;
+function wxWidget(id, val, ghost){
+  return `<div class="wx">
+    <div class="wx-now" id="${id}Now">${wSvg(wLevel(val), 34)}<b>${t('w' + wLevel(val))}</b></div>
+    <div class="wx-track">${ghost != null ? `<span class="ghost" style="left:${ghost*10}%">${wSvg(2, 18)}</span>` : ''}
+      <input type="range" id="${id}" min="0" max="10" step="1" value="${val}" aria-label="${esc(t('w0'))} – ${esc(t('w4'))}"></div>
+    <div class="wx-ends"><span>${t('w0')}</span><span>${t('w4')}</span></div></div>`;
+}
+function bindWx(id, onChange){
+  const el = document.getElementById(id); if (!el) return;
+  el.addEventListener('input', () => { const v = Number(el.value); document.getElementById(id + 'Now').innerHTML = wSvg(wLevel(v), 34) + `<b>${t('w' + wLevel(v))}</b>`; onChange(v); });
+}
+
+/* ---------- quotes ---------- */
+function quoteHTML(key, cls){
+  const q = QUOTES[key]; if (!q) return '';
+  const main = q.g ? q.zh : (lang === 'zh' ? q.zh : q.en), sub = q.g ? q.en : (lang === 'zh' ? q.en : q.zh);
+  const cite = [L(q.by), L(q.src)].filter(Boolean).join(' · ');
+  return `<div class="${cls || ''}"><p class="q-main">${esc(main)}</p><p class="q-sub">${esc(sub)}</p><p class="q-cite">— ${esc(cite)}</p></div>`;
+}
+const pick = arr => arr[Math.floor(Math.random()*arr.length)];
+const dailyKey = DAILY[(new Date().getDate() + new Date().getMonth()) % DAILY.length];
+function renderDaily(){ $('#daily').innerHTML = quoteHTML(dailyKey); }
+
+/* ---------- pre check-in ---------- */
+let pre = null, preStep = 0;
+function openPre(){
+  pre = {emos:[], score:5, moved:false, body:[]}; preStep = 0;
+  $('#mPre').hidden = false; renderPre();
+}
+function closePre(){ $('#mPre').hidden = true; }
+function dots(n, i){ return `<div class="dots" aria-hidden="true">${Array.from({length:n}, (_, k) => `<i class="${k <= i ? 'on' : ''}"></i>`).join('')}</div>`; }
+function renderPre(){
+  const body = $('#preBody'), foot = $('#preFoot');
+  let h = dots(4, preStep), f = '';
+  if (preStep === 0){
+    h += `<h2 id="preTitle">${t('p1T')}</h2><p class="small">${t('p1S')}</p><div class="bubbles">` +
+      EMOS.map(e => `<button type="button" class="bubble" data-emo="${e.id}" aria-pressed="${pre.emos.includes(e.id)}">${esc(L(EMO_LABEL[e.id]))}</button>`).join('') + `</div>`;
+    if (pre.emos.length){ const e = EMOS.find(x => x.id === pre.emos[0]); h += `<div class="validate"><p><b>${t('v_' + e.id)}</b></p>${quoteHTML(e.q)}</div>`; }
+    h += `<p class="warn" id="preWarn"></p>`;
+    f = `<button type="button" class="link" data-act="cancel">${t('cancel')}</button><button type="button" class="primary" data-act="next">${t('next')}</button>`;
+  } else if (preStep === 1){
+    h += `<h2 id="preTitle">${t('p2T')}</h2><p class="small">${t('p2S')}</p>` + wxWidget('wxPre', pre.score) + `<p class="warn" id="preWarn"></p>`;
+    f = `<button type="button" data-act="back">${t('back')}</button><button type="button" class="primary" data-act="next">${t('next')}</button>`;
+  } else if (preStep === 2){
+    h += `<h2 id="preTitle">${t('p3T')}</h2><p class="small">${t('p3S')}</p>` +
+      BODY.map(p => `<div class="body-part"><b>${esc(L(p.name))}</b><div class="chips">` +
+        p.s.map((s, i) => `<button type="button" data-body="${p.id}:${i}" aria-pressed="${pre.body.includes(p.id + ':' + i)}">${esc(L(s))}</button>`).join('') + `</div></div>`).join('') +
+      `<div class="chips"><button type="button" data-body="none" aria-pressed="${pre.body.includes('none')}">${t('nothing')}</button></div>`;
+    f = `<button type="button" data-act="back">${t('back')}</button><button type="button" class="primary" data-act="next">${t('next')}</button>`;
+  } else {
+    const e = EMOS.find(x => x.id === pre.emos[0]);
+    applyEmotion(pre);
+    const sc = SCENES.find(s => s.id === state.scene);
+    const on = SOUNDS.filter(s => state.levels[s.id] > .01).map(s => L(s.name));
+    const plan = [L(sc.name), on.join(' · '), state.breath ? t('breathBtn') : ''].filter(Boolean).join(lang === 'zh' ? '，' : ', ');
+    h += `<h2 id="preTitle">${t('p4T')}</h2><p>${t('p4Emo', {emo: esc(L(EMO_LABEL[e.id]))})}</p><p>${t('p4Plan', {plan: esc(plan)})}</p>` +
+      `<div class="validate"><p><b>${t('p_' + e.id)}</b></p>${quoteHTML(e.q)}</div>`;
+    f = `<button type="button" data-act="back">${t('back')}</button><button type="button" class="primary" data-act="go">${t('beginListen')}</button>`;
+  }
+  body.innerHTML = h; foot.innerHTML = f;
+  if (preStep === 1) bindWx('wxPre', v => { pre.score = v; pre.moved = true; $('#preWarn').textContent = ''; });
+}
+$('#preBody').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.emo){
+    const id = b.dataset.emo, i = pre.emos.indexOf(id);
+    if (i >= 0) pre.emos.splice(i, 1);
+    else if (pre.emos.length >= 2){ $('#preWarn').textContent = t('p1Max'); return; }
+    else pre.emos.push(id);
+    renderPre();
+  } else if (b.dataset.body){
+    const id = b.dataset.body;
+    if (id === 'none') pre.body = pre.body.includes('none') ? [] : ['none'];
+    else { pre.body = pre.body.filter(x => x !== 'none'); const i = pre.body.indexOf(id); i >= 0 ? pre.body.splice(i, 1) : pre.body.push(id); }
+    renderPre();
+  }
+});
+$('#preFoot').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return; const a = b.dataset.act;
+  if (a === 'cancel'){ closePre(); }
+  else if (a === 'back'){ preStep = Math.max(0, preStep - 1); renderPre(); }
+  else if (a === 'next'){
+    if (preStep === 0 && !pre.emos.length){ $('#preWarn').textContent = t('p1Need'); return; }
+    if (preStep === 1 && !pre.moved){ $('#preWarn').textContent = t('p2Need'); return; }
+    preStep++; renderPre();
+  } else if (a === 'go'){ state.pre = {emos:[...pre.emos], score:pre.score, body:[...pre.body]}; closePre(); resetTimer(); play(); }
+});
+
+/* ---------- post check-in ---------- */
+let post = null;
+function openPost(){
+  post = {score: state.pre ? state.pre.score : 5, moved:false, body:[], help:null};
+  $('#mPost').hidden = false; renderPost();
+}
+function renderPost(){
+  const parts = state.pre ? state.pre.body.map(x => x.split(':')[0]) : [];
+  const sorted = [...POSTS].sort((a, b) => ((b.parts || []).some(p => parts.includes(p)) ? 1 : 0) - ((a.parts || []).some(p => parts.includes(p)) ? 1 : 0));
+  $('#postBody').innerHTML = dots(3, 2) + `<h2 id="postTitle">${t('q1T')}</h2><p class="small">${t('q1S')}</p>` + wxWidget('wxPost', post.score, state.pre ? state.pre.score : null) +
+    `<h3>${t('q2T')}</h3><p class="small">${t('q2S')}</p><div class="chips">` + sorted.map(p => `<button type="button" data-post="${p.id}" aria-pressed="${post.body.includes(p.id)}">${esc(L(p))}</button>`).join('') + `</div>` +
+    `<h3>${t('q3T')}</h3><p class="small">${t('q3S')}</p><div class="chips">` + ['Sound','Touch','Breath','Words'].map(k => `<button type="button" data-help="${k.toLowerCase()}" aria-pressed="${post.help === k.toLowerCase()}">${t('help' + k)}</button>`).join('') + `</div>`;
+  $('#postFoot').innerHTML = `<span></span><button type="button" class="primary" data-act="done">${t('seeResult')}</button>`;
+  bindWx('wxPost', v => { post.score = v; post.moved = true; });
+}
+$('#postBody').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.post){ const i = post.body.indexOf(b.dataset.post); i >= 0 ? post.body.splice(i, 1) : post.body.push(b.dataset.post); b.setAttribute('aria-pressed', i < 0); }
+  if (b.dataset.help){ post.help = post.help === b.dataset.help ? null : b.dataset.help; $$('#postBody [data-help]').forEach(x => x.setAttribute('aria-pressed', x.dataset.help === post.help)); }
+});
+$('#postFoot').addEventListener('click', e => { if (e.target.closest('[data-act="done"]')){ $('#mPost').hidden = true; finishSession({score:post.score, body:[...post.body], help:post.help}); } });
+
+/* ---------- sessions, feedback, data ---------- */
+const sessions = () => LS.get('pn-sessions', []);
+function finishSession(postData){
+  const pr = state.pre;
+  const rec = {date: todayStr(), hour: new Date().getHours(), wk: [0,6].includes(new Date().getDay()), scene: state.scene, min: state.sessionMin || 1,
+    emos: pr ? pr.emos : [], pre: pr ? pr.score : null, body: pr ? pr.body : [], post: postData ? postData.score : null, postBody: postData ? postData.body : [], help: postData ? postData.help : null};
+  const all = sessions(); all.push(rec); LS.set('pn-sessions', all.slice(-60));
+  queueAnon(rec);
+  let type = 'none';
+  if (pr && postData){ const d = pr.score - postData.score; type = d >= 3 ? 'big' : d >= 1 ? 'small' : 'hard'; }
+  state.endModel = {type, emo: pr ? pr.emos[0] : null, body: postData ? postData.body : [], quote: pick(END_POOL[type]), idx: Math.floor(Math.random()*3)};
+  state.pre = null;
+  renderEnd(); renderGreet(); setupConsent();
+  if (type === 'big') celebrate();
+}
+function careNeeded(){
+  const s = sessions().filter(x => x.pre != null).slice(-3);
+  if (s.length < 3) return false;
+  return s.every(x => x.pre >= 8) || s.every(x => x.post != null && x.pre - x.post <= 0);
+}
+function renderEnd(){
+  const m = state.endModel; if (!m) return;
+  const emo = m.emo ? L(EMO_LABEL[m.emo]) : '';
+  const bodyItem = POSTS.find(p => m.body.includes(p.id) && !p.neutral);
+  const bodyTxt = bodyItem ? L(bodyItem) : '';
+  let msg = '';
+  if (m.type === 'big') msg = bodyTxt ? t('endBig', {emo: emo.toLowerCase(), body: bodyTxt}) : t('endBigNoBody', {emo: emo.toLowerCase()});
+  else if (m.type === 'small') msg = SMALL[lang][m.idx] + (bodyTxt ? (lang === 'zh' ? '' : ' ') + t('endSmallBody', {body: bodyTxt}) : '');
+  else if (m.type === 'hard') msg = HARD[lang][m.idx];
+  else msg = t('endNone');
+  const recent = sessions().filter(x => x.post != null || x.pre != null).slice(-7);
+  const row = recent.length >= 2 ? `<p class="small">${t('recent')}</p><div class="wxrow">${recent.map(x => `<span>${wSvg(wLevel(x.post ?? x.pre), 20)}</span>`).join('')}</div>` : '';
+  endcard.innerHTML = `<div class="card"><p class="eyebrow">${t('endEyebrow')}</p><p class="msg">${esc(msg)}</p>${quoteHTML(m.quote)}${row}` +
+    (careNeeded() ? `<p class="care">${t('care')}</p>` : '') +
+    (LS.get('pn-consent', null) === null ? `<div class="validate" style="text-align:left"><p class="small">${t('consentTxt')}</p><div class="row" style="justify-content:flex-start;margin-top:8px"><button type="button" class="primary" data-consent="yes">${t('consentYes')}</button><button type="button" data-consent="no">${t('consentNo')}</button></div></div>` : '') +
+    `<div class="row"><button type="button" class="primary" id="again">${t('again')}</button><button type="button" id="closeEnd">${t('stay')}</button></div></div>`;
+  endcard.hidden = false;
+  $('#again').addEventListener('click', () => { endcard.hidden = true; state.endModel = null; resetTimer(); renderLens(); openPre(); });
+  $('#closeEnd').addEventListener('click', () => { endcard.hidden = true; state.endModel = null; resetTimer(); renderLens(); });
+}
+/* Anonymous stats: no device id, no timestamp, scores as bands only, body sensations never leave the device. */
+const ENDPOINT = ''; // set to the analytics endpoint at launch; empty = prototype, nothing is sent
+const band = v => v == null ? null : v <= 3 ? 'light' : v <= 6 ? 'medium' : 'heavy';
+const dir = (a, b) => a == null || b == null ? null : a - b >= 1 ? 'better' : a - b <= -1 ? 'heavier' : 'same';
+const partOfDay = h => h < 6 ? 'small_hours' : h < 9 ? 'morning' : h < 11 ? 'late_morning' : h < 14 ? 'midday' : h < 18 ? 'afternoon' : h < 22 ? 'evening' : 'night';
+function queueAnon(r){
+  if (LS.get('pn-consent', null) !== 'yes') return;
+  const ev = {v:1, type:'session', lang, part_of_day: partOfDay(r.hour), day_type: r.wk ? 'weekend' : 'weekday', scene: r.scene,
+    minutes: r.min <= 1 ? '1' : r.min <= 5 ? '2-5' : r.min <= 10 ? '6-10' : '10+', emotions: r.emos, pre_band: band(r.pre), change: dir(r.pre, r.post), helped: r.help};
+  const box = LS.get('pn-outbox', []); box.push(ev); LS.set('pn-outbox', box.slice(-50)); flush();
+}
+function flush(){
+  if (!ENDPOINT) return;
+  const box = LS.get('pn-outbox', []); if (!box.length) return;
+  fetch(ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(box), credentials:'omit', referrerPolicy:'no-referrer'})
+    .then(r => { if (r.ok) LS.set('pn-outbox', []); }).catch(() => {});
+}
+
+endcard.addEventListener('click', e => {
+  const b = e.target.closest('[data-consent]'); if (!b) return;
+  LS.set('pn-consent', b.dataset.consent);
+  if (b.dataset.consent === 'yes'){ const last = sessions().slice(-1)[0]; if (last) queueAnon(last); }
+  b.closest('.validate').remove();
+});
+/* ---------- next-day check-in ---------- */
+function setupCheckin(){
+  const y = new Date(); y.setDate(y.getDate() - 1);
+  const had = sessions().some(s => s.date === todayStr(y));
+  $('#checkin').hidden = !(had && LS.get('pn-checkin', '') !== todayStr());
+}
+$('#checkOpts').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  LS.set('pn-checkin', todayStr());
+  if (LS.get('pn-consent', null) === 'yes'){ const box = LS.get('pn-outbox', []); box.push({v:1, type:'next_day', lang, answer:b.dataset.v}); LS.set('pn-outbox', box.slice(-50)); flush(); }
+  $('#checkin').innerHTML = `<p>${t('checkThanks')}</p>`; setTimeout(() => { $('#checkin').hidden = true; }, 2500);
+});
+
+/* ---------- consent & settings ---------- */
+function setupConsent(){}
+let clearArmed = false;
+function renderSettings(){
+  const on = LS.get('pn-consent', null) === 'yes', box = LS.get('pn-outbox', []);
+  $('#setBody').innerHTML = `<h2>${t('setTitle')}</h2>
+    <div class="switch"><div><h3>${t('setShare')}</h3><p class="small">${t('setShareD')}</p></div><button type="button" id="shareTgl" aria-pressed="${on}">${on ? t('on') : t('off')}</button></div>
+    <details><summary>${t('setView')}</summary><pre class="json">${box.length ? esc(JSON.stringify(box.slice(-3), null, 2)) : t('setNone')}</pre></details>
+    <p class="small">${t('setProto')}</p>
+    <div class="row" style="justify-content:flex-start"><button type="button" id="clearAll">${clearArmed ? t('setClear2') : t('setClear')}</button><span class="small" id="clearMsg"></span></div>`;
+}
+$('#setBody').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.id === 'shareTgl'){ const on = LS.get('pn-consent', null) === 'yes'; LS.set('pn-consent', on ? 'no' : 'yes'); if (on) LS.set('pn-outbox', []); renderSettings(); }
+  if (b.id === 'clearAll'){
+    if (!clearArmed){ clearArmed = true; renderSettings(); return; }
+    try { Object.keys(localStorage).filter(k => k.startsWith('pn-')).forEach(k => localStorage.removeItem(k)); } catch(err){}
+    LS.set('pn-lang', lang); todaySec = 0; lastSave = 0; clearArmed = false; renderSettings(); setupCheckin();
+    $('#clearMsg').textContent = t('setCleared');
+  }
+});
+const drawer = $('#drawer');
+function showTab(tab){ $$('#tabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.tab === tab)); $$('.pane').forEach(p => { p.hidden = p.dataset.pane !== tab; }); }
+function openDrawer(tab){ clearArmed = false; renderSettings(); renderPhotos(); if (tab) showTab(tab); drawer.hidden = false; }
+$('#openDrawer').addEventListener('click', () => openDrawer());
+$('#closeDrawer').addEventListener('click', () => { drawer.hidden = true; });
+drawer.addEventListener('click', e => { if (e.target === drawer) drawer.hidden = true; });
+$('#tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) showTab(b.dataset.tab); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !drawer.hidden) drawer.hidden = true; });
+
+/* photos: each scene can carry a real landscape photo; user photos stay on this device (IndexedDB) */
+const PHOTO = {};
+const BUILTIN = {morning:'img/forest.jpg', commute:'img/jungle.jpg', pause:'img/stream.jpg', before:'img/sea.jpg', noon:'img/beach.jpg', alone:'img/campfire.jpg', winddown:'img/snow.jpg', night:'img/starry.jpg'};
+const AI_IMG = new Set(['img/forest.jpg','img/stream.jpg','img/campfire.jpg','img/snow.jpg','img/starry.jpg','img/sea.jpg','img/jungle.jpg']);
+const FOCUS = {'img/forest.jpg':'50% 40%','img/stream.jpg':'50% 55%','img/beach.jpg':'45% 85%','img/campfire.jpg':'50% 62%','img/snow.jpg':'50% 45%','img/starry.jpg':'50% 55%','img/sea.jpg':'50% 40%','img/jungle.jpg':'45% 55%'};
+const TILE_BG = {
+  morning:'linear-gradient(160deg,#F1C192,#7F9C94)', commute:'linear-gradient(160deg,#7E8F96,#34434A)', pause:'linear-gradient(160deg,#B7C6B6,#4E6E62)',
+  before:'linear-gradient(160deg,#F2A877,#45506A)', noon:'linear-gradient(160deg,#E3C9A0,#5B7E82)', alone:'linear-gradient(160deg,#B07E62,#1C2733)',
+  winddown:'linear-gradient(160deg,#5A5C70,#0A1216)', night:'linear-gradient(160deg,#4A5B5C,#060C0F)'
+};
+const photoUrl = id => PHOTO[id] || BUILTIN[id] || null;
+const thumbStyle = id => { const u = photoUrl(id); return u ? `background-image:url(&quot;${u}&quot;)` : `background-image:${TILE_BG[id]}`; };
+function idbOpen(){ return new Promise((res, rej) => { try { const r = indexedDB.open('pn-photos', 1); r.onupgradeneeded = () => r.result.createObjectStore('p'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); } catch(e){ rej(e); } }); }
+function idbDo(mode, fn){ return idbOpen().then(db => new Promise((res, rej) => { const tx = db.transaction('p', mode); const rq = fn(tx.objectStore('p')); tx.oncomplete = () => res(rq ? rq.result : undefined); tx.onerror = () => rej(tx.error); })); }
+async function loadPhotos(){
+  try { for (const s of SCENES){ const b = await idbDo('readonly', st => st.get(s.id)); if (b) PHOTO[s.id] = URL.createObjectURL(b); } } catch(e){}
+  renderScenes(); setBg(state.scene);
+}
+function downscale(file){
+  return new Promise((res, rej) => {
+    const img = new Image(), u = URL.createObjectURL(file);
+    img.onload = () => { const k = Math.min(1, 2000/Math.max(img.width, img.height)), c = document.createElement('canvas'); c.width = Math.round(img.width*k); c.height = Math.round(img.height*k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(u); c.toBlob(b => b ? res(b) : rej(new Error('encode')), 'image/jpeg', .86); };
+    img.onerror = () => { URL.revokeObjectURL(u); rej(new Error('decode')); };
+    img.src = u;
+  });
+}
+async function savePhoto(id, file){
+  try {
+    const blob = await downscale(file);
+    try { await idbDo('readwrite', st => st.put(blob, id)); } catch(e){}
+    if (PHOTO[id]) URL.revokeObjectURL(PHOTO[id]);
+    PHOTO[id] = URL.createObjectURL(blob);
+  } catch(e){}
+  renderPhotos(); renderScenes(); if (state.scene === id) setBg(id);
+}
+async function resetPhoto(id){
+  try { await idbDo('readwrite', st => st.delete(id)); } catch(e){}
+  if (PHOTO[id]) URL.revokeObjectURL(PHOTO[id]); delete PHOTO[id];
+  renderPhotos(); renderScenes(); if (state.scene === id) setBg(id);
+}
+function renderPhotos(){
+  $('#photos').innerHTML = SCENES.map(s => `<div class="ph"><span class="th" style="${thumbStyle(s.id)}"></span><span class="nm">${esc(L(s.name))}</span>` +
+    `<label>${t('photoPick')}<input type="file" accept="image/*" data-photo="${s.id}"></label>` +
+    (PHOTO[s.id] ? `<button type="button" class="link" data-reset="${s.id}">${t('photoReset')}</button>` : '') + `</div>`).join('');
+}
+$('#photos').addEventListener('change', e => { const i = e.target.closest('input[data-photo]'); if (i && i.files && i.files[0]) savePhoto(i.dataset.photo, i.files[0]); });
+$('#photos').addEventListener('click', e => { const b = e.target.closest('[data-reset]'); if (b) resetPhoto(b.dataset.reset); });
+let bgFront = 'bgA';
+function setBg(id){
+  const u = photoUrl(id); state.photo = !!u;
+  const credit = $('#credit'); if (credit) credit.hidden = !(u && !PHOTO[id] && AI_IMG.has(u));
+  ['bgA','bgB'].forEach(k => { document.getElementById(k).style.backgroundPosition = (u && FOCUS[u]) || 'center'; });
+  const nextId = bgFront === 'bgA' ? 'bgB' : 'bgA', nEl = document.getElementById(nextId), cEl = document.getElementById(bgFront);
+  if (u){ nEl.style.backgroundImage = `url("${u}")`; nEl.classList.add('on'); cEl.classList.remove('on'); bgFront = nextId; }
+  else { nEl.classList.remove('on'); cEl.classList.remove('on'); }
+}
+
+/* ---------- static renders ---------- */
+function renderStat(){}
+function renderDur(){
+  $('#durChips').innerHTML = DURS.map(m => `<button type="button" data-min="${m}" aria-pressed="${state.duration === m*60}">${m ? m + ' ' + t('minUnit') : t('open')}</button>`).join('');
+}
+$('#durChips').addEventListener('click', e => { const b = e.target.closest('button'); if (b){ setDuration(Number(b.dataset.min)); renderLens(); } });
+function renderVoices(){ $('#voiceChips').innerHTML = VOICES.map(v => `<button type="button" data-v="${v.id}" aria-pressed="${state.voice === v.id}">${esc(L(v.name))}</button>`).join(''); }
+$('#voiceChips').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setVoice(b.dataset.v); });
+function renderScenes(){
+  $('#scenes').innerHTML = SCENES.map(s => `<button type="button" class="tile" data-s="${s.id}" aria-pressed="${state.scene === s.id}"><span class="th" style="${thumbStyle(s.id)}">${state.rec === s.id ? '<span class="rec"></span>' : ''}</span><span>${esc(L(s.name))}</span></button>`).join('');
+}
+$('#scenes').addEventListener('click', e => { const b = e.target.closest('[data-s]'); if (b) applyScene(b.dataset.s); });
+const mixer = $('#mixer');
+function renderMixer(){
+  mixer.innerHTML = SOUNDS.map(s => `<article class="snd" data-id="${s.id}"><header><span class="glyph" aria-hidden="true">${s.zh}</span><div class="snd-t"><h3>${esc(L(s.name))}</h3><p class="land">${esc(L(s.land))}</p></div>` +
+    `<button class="sw" type="button" aria-pressed="false"></button></header><input type="range" id="vol-${s.id}" min="0" max="100" value="0" aria-label="${esc(L(s.name))}"></article>`).join('');
+  SOUNDS.forEach(s => updateCard(s.id));
+}
+mixer.addEventListener('click', e => { const b = e.target.closest('.sw'); if (!b) return; const id = b.closest('.snd').dataset.id; setLevel(id, state.levels[id] > .01 ? 0 : (state.last[id] || .5)); });
+mixer.addEventListener('input', e => { if (e.target.type === 'range'){ const id = e.target.closest('.snd').dataset.id; setLevel(id, e.target.value/100); } });
+function updateCard(id){
+  const el = mixer.querySelector(`[data-id="${id}"]`); if (!el) return;
+  const v = state.levels[id], on = v > .01; el.classList.toggle('on', on);
+  const b = el.querySelector('.sw'); b.setAttribute('aria-pressed', on); b.textContent = on ? t('on') : t('off');
+  el.querySelector('input').value = Math.round(v*100);
+}
+function updateNow(){ const on = SOUNDS.filter(s => state.levels[s.id] > .01).map(s => L(s.name)); $('#nowPlaying').textContent = on.length ? on.join(' · ') : t('silence'); if (state.started) renderLens(); }
+let evFilter = 'all';
+function renderEvidence(){
+  $('#evs').innerHTML = EVID.filter(x => evFilter === 'all' || x.k === evFilter).map(x =>
+    `<article class="ev"><div class="ev-top"><span class="grade ${x.g}">${x.g}</span><span class="ev-use">${t('evUse')}${esc(L(x.u))}</span></div><h3>${esc(L(x.t))}</h3><p>${esc(L(x.f))}</p><p class="cite">${esc(x.c)}</p></article>`).join('');
+}
+$('#evTabs').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; evFilter = b.dataset.f; $$('#evTabs button').forEach(x => x.setAttribute('aria-pressed', x === b)); renderEvidence(); });
+function applyI18n(){
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+  $$('[data-i]').forEach(el => { el.textContent = t(el.dataset.i); });
+  $('#langZh').setAttribute('aria-pressed', lang === 'zh'); $('#langEn').setAttribute('aria-pressed', lang === 'en');
+  renderDaily(); renderDur(); renderVoices(); renderScenes(); renderMixer(); renderEvidence(); updateNow(); renderLens(); renderPhotos();
+  if (!hint.hidden) showHint(hint.dataset.k || 'hintStart');
+  if (!$('#mPre').hidden) renderPre();
+  if (!$('#mPost').hidden) renderPost();
+  if (!drawer.hidden) renderSettings();
+  if (!endcard.hidden && state.endModel) renderEnd();
+}
+function setLang(l){ lang = l; LS.set('pn-lang', l); applyI18n(); }
+$('#langZh').addEventListener('click', () => setLang('zh')); $('#langEn').addEventListener('click', () => setLang('en'));
+
+/* ---------- touch instrument ---------- */
+function touchVoice(xn, yn){
+  if (!ctx) return null;
+  const t0 = ctx.currentTime + .01, hi = Math.min(.999, Math.max(0, 1 - yn)), pv = Math.max(-.8, Math.min(.8, xn*1.6 - .8));
+  const idx = Math.floor(hi * 10), deg = idx % 5, oct = Math.floor(idx / 5), semis = PENTA[deg] + 12*oct;
+  switch (state.voice){
+    case 'drop':   { const f = 600 + hi*1400; tone(touchBus, t0, f*1.8, f, .12, .25, pv); burst(touchBus, t0, .03, 'bandpass', f*3, 3, .18); return null; }
+    case 'pebble': { const f = 300 + hi*700; tone(touchBus, t0, f, f*1.9, .09, .3, pv); tone(touchBus, t0+.07, f*1.3, f*2.2, .07, .15, pv); return null; }
+    case 'flake':  { const f = 659.25*Math.pow(2, semis/12); tone(touchBus, t0, f, f*.995, 1.6, .12, pv); tone(touchBus, t0, f*2.01, f*2, .9, .03, pv); return TONE[deg]; }
+    case 'guzheng':{ const f = 220*Math.pow(2, semis/12); pluck(touchBus, t0, f, .55, pv); return TONE[deg]; }
+    case 'bird':   birdPhrase(touchBus, t0, .14); return null;
+  }
+  return null;
+}
+const touch = $('#touch');
+let drag = null;
+const blocked = () => !endcard.hidden || !$('#mPre').hidden || !$('#mPost').hidden || !drawer.hidden;
+function tapAt(cx, cy){
+  initAudio(); if (ctx.state !== 'running') ctx.resume();
+  const note = touchVoice(cx/W, cy/H);
+  P.ripple.push({x:cx, y:cy, r:4, life:1, label: note ? L(note) : ''});
+}
+touch.addEventListener('pointerdown', e => {
+  if (blocked()) return;
+  drag = {x:e.clientX, y:e.clientY, t:performance.now()};
+  try { touch.setPointerCapture(e.pointerId); } catch(_){}
+  tapAt(e.clientX, e.clientY);
+});
+touch.addEventListener('pointermove', e => {
+  if (!drag || !ctx) return;
+  const now = performance.now(), dist = Math.hypot(e.clientX-drag.x, e.clientY-drag.y), speed = dist / Math.max(1, now-drag.t);
+  setP(touchGain.gain, Math.min(.45, speed*.35), .04); setP(touchFilter.frequency, 500 + (1 - e.clientY/H)*4500, .05);
+  P.trail.push({x:e.clientX, y:e.clientY, life:1}); drag = {x:e.clientX, y:e.clientY, t:now};
+});
+const endDrag = () => { drag = null; if (ctx) setP(touchGain.gain, 0, .12); };
+touch.addEventListener('pointerup', endDrag); touch.addEventListener('pointercancel', endDrag);
+touch.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && !blocked()){ e.preventDefault(); tapAt(W/2, H*.7); } });
+
+/* ---------- canvas ---------- */
+const cv = $('#field'), g = cv.getContext('2d'); let W = 0, H = 0;
+let trees = [], fogs = [];
+const PART = '#FFF6EA', EMBER = '#FFB070', LEAF = '#DCE6AA', GLOW = '#FFE9A8';
+function seedLand(){
+  trees = [2, 3].map(layer => { const arr = []; let x = -10; const sc = (layer === 3 ? 1.35 : 1)*Math.min(1.4, H/800 + .45);
+    while (x < W + 20){ arr.push({x, h: rnd(16, 40)*sc, w: rnd(.4, .58)}); x += rnd(6, 15)*sc; } return arr; });
+  fogs = Array.from({length: 7}, () => ({x: rnd(0, W), y: H*rnd(.4, .85), r: rnd(.22, .45)*Math.max(W, H), v: rnd(.05, .16)*(Math.random() < .5 ? -1 : 1)}));
+}
+function resize(){ const dpr = Math.min(1.5, window.devicePixelRatio || 1); W = window.innerWidth; H = window.innerHeight; cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr); g.setTransform(dpr,0,0,dpr,0,0); seedLand(); }
+addEventListener('resize', resize);
+const SKY = {
+  dawn:  {s:['#56708A','#B79A93','#F1C192'], ink:'#2B403F', sun:'#FFD7A0', moon:false},
+  day:   {s:['#5B7E82','#9DB2A7','#E3C9A0'], ink:'#2D463F', sun:'#FFE4B5', moon:false},
+  dusk:  {s:['#45506A','#A57F86','#F2A877'], ink:'#2C3240', sun:'#FFC48A', moon:false},
+  eve:   {s:['#1C2733','#3D4152','#8E6A64'], ink:'#10181E', sun:'#E9B48C', moon:true},
+  night: {s:['#0A1216','#12212A','#2B3B3C'], ink:'#060C0F', sun:'#BFD0D6', moon:true}
+};
+function skyBand(){ const d = new Date(), h = d.getHours() + d.getMinutes()/60; return h >= 5 && h < 9 ? 'dawn' : h >= 9 && h < 16 ? 'day' : h >= 16 && h < 19.5 ? 'dusk' : h >= 19.5 && h < 23 ? 'eve' : 'night'; }
+let skyB = skyBand(); setInterval(() => { skyB = skyBand(); }, 60000);
+const hx = c => [parseInt(c.slice(1,3),16), parseInt(c.slice(3,5),16), parseInt(c.slice(5,7),16)];
+const mixc = (a, b, k) => { const A = hx(a), B = hx(b); return '#' + A.map((v,i) => Math.round(v + (B[i]-v)*k).toString(16).padStart(2,'0')).join(''); };
+const land = {sea:0, snow:0};
+const ridgeY = (i, x) => { const base = H*(.52 + i*.085), amp = H*(.05 + i*.02); return base - (Math.sin(x*.0032 + i*1.7)*.6 + Math.sin(x*.0091 + i*.6)*.3 + Math.sin(x*.021 + i)*.1 + .4)*amp; };
+const P = {rain:[], snow:[], leaf:[], ember:[], fly:[], bird:[], flow:[], ripple:[], trail:[], party:[]};
+const lv = id => state.levels[id] || 0;
+const cnt = r => { const f = Math.floor(r); return f + (Math.random() < r - f ? 1 : 0); };
+function step(arr, fn){ for (let i = arr.length-1; i >= 0; i--) if (fn(arr[i]) === false) arr.splice(i, 1); }
+function celebrate(){ const n = reduce ? 12 : 44; for (let i = 0; i < n; i++) P.party.push({x:rnd(0,W), y:H*rnd(.5,1), vx:rnd(-.3,.3), vy:rnd(-1.2,-.4), ph:rnd(0,6), life:1}); }
+function frame(){
+  const tm = performance.now()/1000; waveB = computeWave(tm);
+  const br = state.breath ? waveB : .5 - .5*Math.cos(2*Math.PI*tm/10);
+  if (W > 2){
+    const k = reduce ? .35 : 1, wind = .3 + lv('wind')*2.4, S = SKY[skyB], hz = H*.56;
+    land.sea += ((lv('waves') > .25 ? 1 : 0) - land.sea)*.02;
+    land.snow += ((lv('snow') > .3 && lv('waves') <= .25 ? 1 : 0) - land.snow)*.02;
+    const fa = 1 - land.sea;
+    g.clearRect(0, 0, W, H);
+    if (!state.photo){
+    g.globalAlpha = 1;
+    let gr = g.createLinearGradient(0, 0, 0, hz); gr.addColorStop(0, S.s[0]); gr.addColorStop(.62, S.s[1]); gr.addColorStop(1, S.s[2]);
+    g.fillStyle = gr; g.fillRect(0, 0, W, H);
+    const sx = W*.7, sy = hz - H*.06;
+    const rg = g.createRadialGradient(sx, sy, 0, sx, sy, Math.max(W, H)*.55); rg.addColorStop(0, S.sun); rg.addColorStop(1, 'rgba(0,0,0,0)');
+    g.globalAlpha = (S.moon ? .16 : .4)*(.82 + .18*br); g.fillStyle = rg; g.fillRect(0, 0, W, H);
+    g.globalAlpha = S.moon ? .9 : .6; g.fillStyle = S.moon ? '#F4EEDF' : '#FFF1D6';
+    g.beginPath(); g.arc(sx, S.moon ? hz - H*.32 : sy, S.moon ? 13 : 28, 0, 6.283); g.fill();
+    if (fa > .01){
+      for (let i = 0; i < 4; i++){
+        let col = mixc(S.s[2], S.ink, .3 + i*.22);
+        if (land.snow > .01 && i < 3) col = mixc(col, '#E6ECEE', land.snow*(.6 - i*.16));
+        g.globalAlpha = fa; g.fillStyle = col; g.beginPath(); g.moveTo(0, H);
+        for (let x = 0; x <= W + 8; x += 8) g.lineTo(x, ridgeY(i, x));
+        g.lineTo(W, H); g.closePath(); g.fill();
+        if (i >= 2){
+          g.globalAlpha = fa*(1 - land.snow*.6);
+          g.beginPath();
+          trees[i-2].forEach(tr => { const y = ridgeY(i, tr.x) + 3; g.moveTo(tr.x, y - tr.h); g.lineTo(tr.x - tr.h*tr.w*.5, y); g.lineTo(tr.x + tr.h*tr.w*.5, y); g.closePath(); });
+          g.fill();
+        }
+        if (i < 3){
+          const y0 = H*(.52 + i*.085) - H*.05, y1 = y0 + H*.14;
+          const fg = g.createLinearGradient(0, y0, 0, y1); const a = (.16 + .1*br)*fa;
+          fg.addColorStop(0, 'rgba(255,248,236,0)'); fg.addColorStop(.55, `rgba(255,248,236,${a})`); fg.addColorStop(1, 'rgba(255,248,236,0)');
+          g.globalAlpha = 1; g.fillStyle = fg; g.fillRect(0, y0, W, y1 - y0);
+        }
+      }
+    }
+    if (land.sea > .01){
+      const sa = land.sea;
+      const sg = g.createLinearGradient(0, hz, 0, H); sg.addColorStop(0, S.s[2]); sg.addColorStop(.35, mixc(S.s[2], S.ink, .45)); sg.addColorStop(1, mixc(S.s[2], S.ink, .8));
+      g.globalAlpha = sa; g.fillStyle = sg; g.fillRect(0, hz, W, H - hz);
+      g.strokeStyle = S.sun; g.lineWidth = 1.4;
+      for (let j = 0; j < 26; j++){
+        const f = j/26, y = hz + 3 + Math.pow(f, 1.6)*(H - hz)*.8, w = (8 + f*120)*(.55 + .45*Math.sin(tm*1.3 + j*1.7));
+        g.globalAlpha = sa*.4*(1 - f*.8); g.beginPath(); g.moveTo(sx - w/2, y); g.lineTo(sx + w/2, y); g.stroke();
+      }
+      for (let j = 0; j < 3; j++){
+        const base = H*(.74 + j*.08) - waveB*H*.035*(1 - j*.2), pts = [];
+        for (let x = 0; x <= W + 10; x += 10) pts.push([x, base + Math.sin(x*.009 + tm*(.5 + j*.15) + j*2)*(4 + 7*waveB) + Math.sin(x*.023 - tm*.8)*2]);
+        g.beginPath(); g.moveTo(0, H); pts.forEach(q => g.lineTo(q[0], q[1])); g.lineTo(W, H); g.closePath();
+        g.fillStyle = PART; g.globalAlpha = sa*(.05 + .03*j); g.fill();
+        g.beginPath(); pts.forEach((q, i) => i ? g.lineTo(q[0], q[1]) : g.moveTo(q[0], q[1]));
+        g.strokeStyle = PART; g.globalAlpha = sa*.45; g.lineWidth = 1.1; g.stroke();
+      }
+    }
+    }
+    fogs.forEach(f => { f.x += f.v; if (f.x < -f.r) f.x = W + f.r; if (f.x > W + f.r) f.x = -f.r;
+      const fg = g.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r); fg.addColorStop(0, 'rgba(255,248,236,1)'); fg.addColorStop(1, 'rgba(255,248,236,0)');
+      g.globalAlpha = (state.photo ? .03 : .06) + (state.photo ? .03 : .06)*br; g.fillStyle = fg; g.fillRect(f.x - f.r, f.y - f.r, f.r*2, f.r*2); });
+    if (lv('fire') > .01){ const eg = g.createRadialGradient(W/2, H, 0, W/2, H, H*.6); eg.addColorStop(0, EMBER); eg.addColorStop(1, 'rgba(0,0,0,0)'); g.globalAlpha = .3*lv('fire')*(.85 + .15*Math.sin(tm*7)*Math.sin(tm*3.1)); g.fillStyle = eg; g.fillRect(0, 0, W, H); }
+    if (fa > .3 && !state.photo){
+      for (let n = cnt(lv('stream')*.6*k); n-- && P.flow.length < 80;) P.flow.push({x:-80, y:H*rnd(.86,.96), len:rnd(20,80), v:rnd(1.6,3.8)});
+      g.strokeStyle = PART; g.lineWidth = 1.2; g.globalAlpha = (.2 + .3*lv('stream'))*fa; g.beginPath();
+      step(P.flow, p => { p.x += p.v; const y = p.y + Math.sin(tm*2 + p.x*.02)*1.5; g.moveTo(p.x, y); g.lineTo(p.x + p.len, y); return p.x < W + 10; }); g.stroke();
+    }
+    for (let n = cnt(lv('rain')*3.5*k); n-- && P.rain.length < 260;) P.rain.push({x:rnd(-60, W+20), y:-20, v:rnd(9,15), l:rnd(10,24)});
+    g.strokeStyle = PART; g.lineWidth = 1; g.globalAlpha = .38; g.beginPath();
+    step(P.rain, p => { p.y += p.v; p.x += wind*.7; g.moveTo(p.x, p.y); g.lineTo(p.x - wind*1.4, p.y - p.l); return p.y < H; }); g.stroke();
+    for (let n = cnt(lv('snow')*.8*k); n-- && P.snow.length < 240;) P.snow.push({x:rnd(-W*.1, W*1.05), y:-6, r:rnd(.8,3), v:rnd(.35,1.05), ph:rnd(0,6)});
+    g.fillStyle = PART; g.globalAlpha = .85;
+    step(P.snow, p => { p.y += p.v; p.x += wind*.35 + Math.sin(tm*.8 + p.ph)*.35; g.beginPath(); g.arc(p.x, p.y, p.r, 0, 6.283); g.fill(); return p.y < H + 6; });
+    for (let n = cnt((lv('leaves')*.18 + lv('wind')*.04)*k); n-- && P.leaf.length < 60;) P.leaf.push({x:-20, y:rnd(0, H*.7), s:rnd(3,6), rot:rnd(0,6), vr:rnd(-.04,.04), ph:rnd(0,6)});
+    g.fillStyle = LEAF; g.globalAlpha = .8;
+    step(P.leaf, p => { p.x += wind*1.4 + .6; p.y += .4 + Math.sin(tm*1.5 + p.ph)*.6; p.rot += p.vr; g.save(); g.translate(p.x, p.y); g.rotate(p.rot); g.beginPath(); g.ellipse(0, 0, p.s*1.8, p.s*.8, 0, 0, 6.283); g.fill(); g.restore(); return p.x < W + 30 && p.y < H + 10; });
+    for (let n = cnt(lv('fire')*.5*k); n-- && P.ember.length < 80;) P.ember.push({x:W/2 + rnd(-.18,.18)*W, y:H + 4, v:rnd(.5,1.6), ph:rnd(0,6), life:1});
+    g.fillStyle = EMBER;
+    step(P.ember, p => { p.y -= p.v; p.x += Math.sin(tm*2.5 + p.ph)*.6 + wind*.2; p.life -= .005; g.globalAlpha = Math.max(0, p.life)*.9; g.beginPath(); g.arc(p.x, p.y, 1.7, 0, 6.283); g.fill(); return p.life > 0; });
+    for (let n = cnt(lv('crickets')*.05); n-- && P.fly.length < 30;) P.fly.push({x:rnd(0,W), y:H*rnd(.5,.92), ph:rnd(0,6), life:1, vx:rnd(-.3,.3), vy:rnd(-.2,.2)});
+    g.fillStyle = GLOW;
+    step(P.fly, p => { p.x += p.vx; p.y += p.vy; p.life -= .0015; const a = Math.pow(Math.max(0, Math.sin(tm*1.7 + p.ph)), 4)*p.life; g.globalAlpha = a*.25; g.beginPath(); g.arc(p.x, p.y, 8, 0, 6.283); g.fill(); g.globalAlpha = a; g.beginPath(); g.arc(p.x, p.y, 2, 0, 6.283); g.fill(); return p.life > 0; });
+    step(P.party, p => { p.x += p.vx; p.y += p.vy; p.life -= .004; const a = (.5 + .5*Math.sin(tm*3 + p.ph))*Math.max(0, p.life); g.fillStyle = GLOW; g.globalAlpha = a*.3; g.beginPath(); g.arc(p.x, p.y, 9, 0, 6.283); g.fill(); g.globalAlpha = a; g.beginPath(); g.arc(p.x, p.y, 2.4, 0, 6.283); g.fill(); return p.life > 0; });
+    for (let n = cnt(lv('birds')*.005); n-- && P.bird.length < 6;) P.bird.push({x:-20, y:H*rnd(.14,.34), v:rnd(1.2,2.4), fl:rnd(0,6), s:rnd(.8,1.4)});
+    g.strokeStyle = S.moon ? PART : '#3A3A3A'; g.lineWidth = 1.5; g.globalAlpha = .7;
+    step(P.bird, p => { p.x += p.v; p.y += Math.sin(tm*2 + p.fl)*.25; const w = (3 + 3*Math.sin(tm*12 + p.fl))*p.s; g.beginPath(); g.moveTo(p.x - 7*p.s, p.y - w); g.lineTo(p.x, p.y); g.lineTo(p.x + 7*p.s, p.y - w); g.stroke(); return p.x < W + 30; });
+    let vg = g.createLinearGradient(0, 0, 0, H); vg.addColorStop(0, 'rgba(8,12,10,.22)'); vg.addColorStop(.25, 'rgba(8,12,10,0)'); vg.addColorStop(.62, 'rgba(8,12,10,0)'); vg.addColorStop(1, 'rgba(8,12,10,.42)');
+    if (!state.photo){ g.globalAlpha = 1; g.fillStyle = vg; g.fillRect(0, 0, W, H); }
+    g.strokeStyle = PART; g.lineWidth = 1.5; g.font = '16px "Noto Serif SC", serif'; g.textAlign = 'center';
+    step(P.ripple, p => { p.r += 1.8; p.life -= .016; g.globalAlpha = Math.max(0, p.life); g.beginPath(); g.arc(p.x, p.y, p.r, 0, 6.283); g.stroke(); if (p.label){ g.fillStyle = PART; g.fillText(p.label, p.x, p.y - 12 - (1 - p.life)*18); } return p.life > 0; });
+    g.fillStyle = PART;
+    step(P.trail, p => { p.life -= .03; g.globalAlpha = Math.max(0, p.life)*.7; g.beginPath(); g.arc(p.x, p.y, 2.5 + (1 - p.life)*6, 0, 6.283); g.fill(); return p.life > 0; });
+    if (state.dim){ g.globalAlpha = .4; g.fillStyle = '#060A0C'; g.fillRect(0, 0, W, H); }
+    g.globalAlpha = 1;
+  }
+  if (state.started && state.breath){ const bp = breathPhase(tm); lens.style.transform = `scale(${.9 + .14*bp.b})`; const txt = t(bp.inhale ? 'inhale' : 'exhale') + ' ' + Math.ceil(bp.left); const lt = $('#lensTop'); if (lt.textContent !== txt) lt.textContent = txt; } else if (lens.style.transform) lens.style.transform = '';
+  requestAnimationFrame(frame);
+}
+
+/* ---------- boot ---------- */
+state.rec = timeScene();
+resize();
+applyScene(state.rec);
+applyI18n();
+setupCheckin();
+loadPhotos();
+requestAnimationFrame(frame);
+})();
+
+
+
+</script>
+
+</body>
+</html>
